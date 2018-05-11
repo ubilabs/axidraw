@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    svg {
+      background-color: #EEE;
+      border: 1px solid #444;
+    }
+
+    svg path {
+      stroke-width: 1px;
+      vector-effect: non-scaling-stroke;
+    }
+  </style>
+</head>
+
+<body>
+
+  <input type="range" min="1" max="100" value="20" id="amplitude" oninput="update()"> Amplitude
+  <br>
+  <input type="range" min="0" max="100" value="50" id="offset" oninput="update()"> Offset
+  <br>
+  <input type="range" min="0" max="5" value="1" id="frequency" step="0.1" oninput="update()"> Frequency
+  <br>
+  <input type="range" min="0" max="100" value="50" step="1" id="width" oninput="update()"> Width
+  <br>
+  <button onclick="drawPen()">Draw</button>
+  <br>
+  <svg id="svg" width="100" height="100" viewBox="0,0,100,100" style="width:400px;height:400px"></svg>
+
+  <script src="pen-api.js"></script>
+
+  <script>
+    const getSliderValue = id => Number(document.getElementById(id).value);
+    const points = [];
+
+    function update() {
+      points.length = 0; // clear the points
+
+      const amplitude = getSliderValue('amplitude');
+      const offset = getSliderValue('offset');
+      const frequency = getSliderValue('frequency');
+      const width = getSliderValue('width');
+      const step = 0.1;
+
+
+
+      for (let i = 0; i < width; i += step) {
+        const y = Math.sin(i/frequency) * amplitude + offset;
+        points.push([i, y]);
+      }
+
+      radius = amplitude;
+
+      for (let i = 0; i < width; i += step) {
+        radius -= 0.02;
+        const y = Math.sin(i / frequency) * radius + offset;
+        const x = Math.cos(i / frequency) * radius + offset;
+
+        points.push([x, y]);
+      }
+
+      drawSVG();
+    }
+
+    update();
+
+    function drawSVG() {
+      const path = points.map((p, index) => {
+        const [x, y] = p;
+        const instruction = index == 0 ? 'M' : 'L';
+        return `${instruction} ${x} ${y}`;
+      }).join(' ');
+
+      svg.innerHTML = `
+        <path d="${path}" fill="transparent" stroke="black"/>
+      `;
+    }
+
+    function drawPen() {
+      axidraw.drawPath(points);
+    }
+  </script>
+</body>
+</html>
