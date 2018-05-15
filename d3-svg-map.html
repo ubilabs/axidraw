@@ -1,0 +1,80 @@
+<script src="https://unpkg.com/d3-require@1"></script>
+<script>
+  d3.require("d3-geo@1", "d3-selection@1", "d3-fetch@1", "d3-tile@0.0").then(d3 => {
+    const key = 'fApLQBTwQbaIclmV0CoOQA';
+    const height = 200;
+    const width = 400;
+    const zoom = 18;
+    const center = [9.995, 53.565];
+
+    function filter({features}, test) {
+      return {type: "FeatureCollection", features: features.filter(test)};
+    }
+
+    // project the map for the given position, zoom and dimensions
+    const projection = d3.geoMercator()
+      .center(center)
+      .scale((1 << zoom) / (2 * Math.PI))
+      .translate([width / 2, height / 2])
+      .precision(0)
+
+    const path = d3.geoPath(projection);
+
+    // compute the quadtree tiles
+    const tile = d3.tile()
+      .size([width, height])
+      .scale(projection.scale() * 2 * Math.PI)
+      .translate(projection([0, 0]))
+
+    // load the vector tiles
+    const requests = Promise.all(tile().map(async d => {
+      console.log(`loading ${d.z}/${d.x}/${d.y}`);
+      d.data = await d3.json(`https://tile.nextzen.org/tilezen/vector/v1/256/all/${d.z}/${d.x}/${d.y}.json?api_key=${key}`);
+      return d;
+    }))
+
+    requests.then(tiles => {
+      water = path(tiles[0].data.water)
+        // find segments
+        .split("M")
+        // remove empty elements
+        .filter(l => l.length)
+        // parse coordinate pairs
+        .map(
+          l => l.split("L").map(
+            // split coordinate pairs into [lng,lat]
+            c => c.split(",").map(
+              // convert pairs to numbers
+              s => Number(s.replace(/Z/g, ''))
+            )
+          )
+        );
+
+      console.log(water);
+
+      const svg = `
+        <svg
+          viewBox="0 0 ${width} ${height}"
+          style="width:800px;width:400px"
+        >
+        ${tiles.map(d => `
+          <path
+            vector-effect="non-scaling-stroke"
+            fill="none"
+            stroke="#33F"
+            stroke-width="2"
+            d="${path(filter(d.data.water, d => d.properties.boundary))}">
+          </path>
+          <path
+            fill="none"
+            stroke="#000"
+            vector-effect="non-scaling-stroke"
+            d="${path(d.data.roads)}">
+          </path>
+        `)}
+      </svg>`;
+
+      document.body.innerHTML = svg;
+    });
+});
+</script>
