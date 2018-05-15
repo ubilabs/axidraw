@@ -2,14 +2,10 @@
 <script>
   d3.require("d3-geo@1", "d3-selection@1", "d3-fetch@1", "d3-tile@0.0").then(d3 => {
     const key = 'fApLQBTwQbaIclmV0CoOQA';
-    const height = 200;
-    const width = 400;
+    const height = 100;
+    const width = 200;
     const zoom = 18;
     const center = [9.995, 53.565];
-
-    function filter({features}, test) {
-      return {type: "FeatureCollection", features: features.filter(test)};
-    }
 
     // project the map for the given position, zoom and dimensions
     const projection = d3.geoMercator()
@@ -34,7 +30,42 @@
     }))
 
     requests.then(tiles => {
-      water = path(tiles[0].data.water)
+      const features = [];
+
+      tiles.forEach(tile => {
+        tile.data.roads.features.forEach(f => {
+          if (f.properties.kind != "ferry"){
+            features.push(f);
+          }
+        });
+        tile.data.water.features.forEach(f => {
+          if (
+            f.properties.boundary &&
+            f.geometry.type != "Point"
+          ){
+            features.push(f);
+          }
+        });
+      });
+
+      const svg = `
+        <svg
+          viewBox="0 0 ${width} ${height}"
+          style="width:800px;width:400px"
+        >
+        ${features.map(f => `
+          <path
+            fill="none"
+            stroke="#000"
+            vector-effect="non-scaling-stroke"
+            d="${path(f)}">
+          </path>
+        `)}
+      </svg>`;
+
+      document.body.innerHTML = svg;
+
+      const points = path({type:"FeatureCollection",features: features})
         // find segments
         .split("M")
         // remove empty elements
@@ -45,36 +76,21 @@
             // split coordinate pairs into [lng,lat]
             c => c.split(",").map(
               // convert pairs to numbers
-              s => Number(s.replace(/Z/g, ''))
+              s => {
+                const value = Number(s.replace(/Z/g, ''));
+                if (isNaN(value)){
+                  console.log(s)
+                }
+                return value;
+              }
             )
           )
         );
 
-      console.log(water);
 
-      const svg = `
-        <svg
-          viewBox="0 0 ${width} ${height}"
-          style="width:800px;width:400px"
-        >
-        ${tiles.map(d => `
-          <path
-            vector-effect="non-scaling-stroke"
-            fill="none"
-            stroke="#33F"
-            stroke-width="2"
-            d="${path(filter(d.data.water, d => d.properties.boundary))}">
-          </path>
-          <path
-            fill="none"
-            stroke="#000"
-            vector-effect="non-scaling-stroke"
-            d="${path(d.data.roads)}">
-          </path>
-        `)}
-      </svg>`;
+      // TODO: PASS POINTS TO AXI DRAW
+      // TODO: OPTIMIZE RENDERING
 
-      document.body.innerHTML = svg;
     });
 });
 </script>
