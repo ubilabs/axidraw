@@ -17,13 +17,15 @@
 
 <body>
 
-  <input type="range" min="1" max="100" value="20" id="amplitude" oninput="update()"> Amplitude
+  <input type="range" min="1" max="20" value="5" id="amplitude" oninput="update()"> Amplitude
   <br>
-  <input type="range" min="0" max="100" value="50" id="offset" oninput="update()"> Offset
+  <input type="range" min="0" max="100" value="20" id="offset" oninput="update()"> Offset
   <br>
   <input type="range" min="0" max="5" value="1" id="frequency" step="0.1" oninput="update()"> Frequency
   <br>
   <input type="range" min="0" max="100" value="50" step="1" id="width" oninput="update()"> Width
+  <br>
+  <input type="range" min="1" max="10" value="5" id="lines" oninput="update()"> Lines
   <br>
   <button onclick="drawPen()">Draw</button>
   <br>
@@ -42,23 +44,16 @@
       const offset = getSliderValue('offset');
       const frequency = getSliderValue('frequency');
       const width = getSliderValue('width');
+      const lines = getSliderValue('lines');
       const step = 0.1;
 
+      for (let line = 0; line < lines; line++) {
+        for (let i = 0; i < width; i += step) {
+          const y = Math.sin(i / frequency) * amplitude + offset + line * amplitude * 3;
+          points.push([i, y]);
+        }
 
-
-      for (let i = 0; i < width; i += step) {
-        const y = Math.sin(i/frequency) * amplitude + offset;
-        points.push([i, y]);
-      }
-
-      radius = amplitude;
-
-      for (let i = 0; i < width; i += step) {
-        radius -= 0.02;
-        const y = Math.sin(i / frequency) * radius + offset;
-        const x = Math.cos(i / frequency) * radius + offset;
-
-        points.push([x, y]);
+        points.push(null);
       }
 
       drawSVG();
@@ -67,14 +62,24 @@
     update();
 
     function drawSVG() {
-      const path = points.map((p, index) => {
+      const path = [];
+      let penUp = false;
+
+      points.forEach((p, index) => {
+        if (p == null) {
+          penUp = true;
+          return;
+        }
+
         const [x, y] = p;
-        const instruction = index == 0 ? 'M' : 'L';
-        return `${instruction} ${x} ${y}`;
-      }).join(' ');
+        const instruction = (index == 0 || penUp == true) ? 'M' : 'L';
+        path.push(`${instruction} ${x} ${y}`);
+
+        penUp = false;
+      });
 
       svg.innerHTML = `
-        <path d="${path}" fill="transparent" stroke="black"/>
+        <path d="${path.join(' ')}" fill="transparent" stroke="black"/>
       `;
     }
 
@@ -83,4 +88,5 @@
     }
   </script>
 </body>
+
 </html>
