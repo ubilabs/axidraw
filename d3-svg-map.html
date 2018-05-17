@@ -33,19 +33,15 @@
       const features = [];
 
       tiles.forEach(tile => {
-        tile.data.roads.features.forEach(f => {
-          if (f.properties.kind != "ferry"){
-            features.push(f);
-          }
-        });
-        tile.data.water.features.forEach(f => {
-          if (
-            f.properties.boundary &&
-            f.geometry.type != "Point"
-          ){
-            features.push(f);
-          }
-        });
+        features.push(
+          ... tile.data.roads.features.filter(
+            feature => feature.properties.kind != "ferry"
+          ),
+          ... tile.data.water.features.filter(feature =>
+            feature.properties.boundary &&
+            feature.geometry.type != "Point"
+          )
+        );
       });
 
       const svg = `
