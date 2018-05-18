@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Axidraw Map Plotter</title>
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.css' rel='stylesheet' />
+  <style>
+      html, body {
+        height: 100%;
+        margin:0;
+        padding:0;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      #map {
+        width: 500px;
+        height: 500px;
+        box-shadow: 1px 1px 8px rgba(0,0,0,0.15);
+      }
+      #info {
+        margin-top: 1em;
+        font-size: 2em;
+
+      }
+
+      .mapboxgl-ctrl-attrib.mapboxgl-compact::after {display: none}
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div id="info"></div>
+
+  <script>
+    const info = document.getElementById('info');
+    mapboxgl.accessToken = 'pk.eyJ1IjoidWJpbGFicyIsImEiOiJ4Tm02bDJrIn0.aA51umnsZbzugtBiFLZPoQ';
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/ubilabs/cjhbua7mp0a712rnnqi4k6il2',
+      center: [9.9611942, 53.5612595],
+      zoom: 9
+    });
+
+    map.on('move', function() {
+      const center = map.getCenter();
+      info.innerHTML = `${center.lat.toFixed(1)} N - ${center.lng.toFixed(1)} E`;
+    });
+  </script>
+</body>
+</html>
