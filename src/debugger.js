@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 import TWEEN from '@tweenjs/tween.js';
 
-import Recoder from './recorder';
+import Recoder from './lib/recorder';
 
 const SPEED_FACTOR = 25;
 

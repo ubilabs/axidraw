@@ -1,7 +1,7 @@
-<script src="pen-api.js"></script>
-<script>
+import axidraw from './lib/pen-api';
 
-  // Test script to quickly draw some paths.
+(async function() {
+  await axidraw.init();
 
   axidraw.drawPath([
     [1, 1],
@@ -14,6 +14,6 @@
     null,
     [3, 3],
     [4, 3],
-    [4, 4],
+    [4, 4]
   ]);
-</script>
+})();
