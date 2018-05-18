@@ -3,11 +3,11 @@ const axidraw = {
 
   init: async () => {
     // release pen and stop motor
-    await axidraw.pen("state=up");
-    await axidraw.call("DELETE", 'motors');
+    await axidraw.pen('state=up');
+    await axidraw.call('DELETE', 'motors');
   },
 
-  drawPath: (coords) => {
+  drawPath: coords => {
     const batch = ['state=up'];
     let penUp = true;
 
@@ -17,7 +17,7 @@ const axidraw = {
         penUp = true;
       } else {
         const [x, y] = coord;
-        batch.push(`x=${x}&y=${y*axidraw.ratio}`);
+        batch.push(`x=${x}&y=${y * axidraw.ratio}`);
 
         if (penUp) {
           batch.push('state=draw');
@@ -26,7 +26,7 @@ const axidraw = {
       }
 
       if (index == 0) {
-        batch.push('state=draw')
+        batch.push('state=draw');
       }
     });
 
@@ -44,16 +44,16 @@ const axidraw = {
    */
   call: (method, endpoint, data, callback) => {
     if (!callback) {
-      return new Promise(function (resolve, reject) {
+      return new Promise(function(resolve, reject) {
         axidraw.call(method, endpoint, data, resolve);
       });
     }
 
     const xhr = new XMLHttpRequest();
     xhr.open(method, `http://localhost:4242/v1/${endpoint}`);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = function() {
       if (
         xhr.readyState == XMLHttpRequest.DONE &&
         xhr.status == 200 &&
@@ -61,11 +61,10 @@ const axidraw = {
       ) {
         setTimeout(callback, 1);
       }
-    }
+    };
 
     xhr.send(data);
   },
-
 
   /**
    * Simple wrapper to send data to the pen. Internally used.
@@ -73,12 +72,10 @@ const axidraw = {
    * @param  {Function} callback The callback
    */
   pen: (data, callback) => {
-    return axidraw.call("PUT", 'pen', data, callback);
+    return axidraw.call('PUT', 'pen', data, callback);
   },
 
-
-  batch: (batch) => {
-
+  batch: batch => {
     function next() {
       const action = batch.shift();
       console.log(action);
@@ -91,6 +88,6 @@ const axidraw = {
 
     next();
   }
-}
+};
 
-axidraw.init();
+export default axidraw;
