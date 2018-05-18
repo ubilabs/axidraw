@@ -39,6 +39,7 @@
 
   <script>
     const info = document.getElementById('info');
+
     mapboxgl.accessToken = 'pk.eyJ1IjoidWJpbGFicyIsImEiOiJ4Tm02bDJrIn0.aA51umnsZbzugtBiFLZPoQ';
     const map = new mapboxgl.Map({
       container: 'map',
@@ -47,9 +48,13 @@
       zoom: 9
     });
 
-    map.on('move', function() {
+    map.on('move', () => {
       const center = map.getCenter();
-      info.innerHTML = `${center.lat.toFixed(1)} N - ${center.lng.toFixed(1)} E`;
+      const nOrS = center.lat > 0 ? 'N' : 'S';
+      const wOrE = center.lng > 0 ? 'E' : 'W';
+      const lat = `${Math.abs(center.lat.toFixed(1))} ${nOrS}`;
+      const lng = `${Math.abs(center.lng.toFixed(1))} ${wOrE}`;
+      info.innerHTML = `${lat} / ${lng}`;
     });
   </script>
 </body>
