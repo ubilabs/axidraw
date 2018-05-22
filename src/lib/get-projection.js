@@ -8,7 +8,7 @@ import {geoMercator} from 'd3-geo';
 export default function getProjection(viewport) {
   return geoMercator()
     .center(viewport.center)
-    .scale((1 << viewport.zoom) / (2 * Math.PI))
+    .scale(2 ** viewport.zoom / (2 * Math.PI))
     .translate([viewport.width / 2, viewport.height / 2])
     .precision(0);
 }
