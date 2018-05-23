@@ -2,7 +2,9 @@
   "name": "axidraw",
   "version": "1.0.0",
   "description": "Axidraw experiments",
-  "dependencies": {},
+  "dependencies": {
+    "simplify-js": "^1.2.3"
+  },
   "devDependencies": {
     "@tweenjs/tween.js": "^17.2.0",
     "cncserver": "^2.8.5",
