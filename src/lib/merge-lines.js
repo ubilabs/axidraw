@@ -28,7 +28,6 @@ export default function (lines) {
 
     if (lastLine && distance(lastLine, nextLine) < JOIN_DISTANCE) {
       lastLine.push(...nextLine);
-      // lastLine.push(... nextLine.slice(1));
     } else {
       mergedLines.push(nextLine);
     }
