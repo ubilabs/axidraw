@@ -7,11 +7,14 @@ import loadLines from './lib/load-lines';
 import mergeLines from './lib/merge-lines';
 import simplifyLines from './lib/simplify-lines';
 import {renderSVGPaths} from './lib/svg-tools';
+import cropLines from './lib/crop-lines';
 
 const height = 100;
 const width = 200;
 const zoom = 18;
 const center = [9.995, 53.565];
+
+const viewBox = [0, 0, width, height];
 
 async function plotLines(lines) {
   const axidraw = await createAxidraw();
@@ -23,7 +26,8 @@ async function plotLines(lines) {
   });
 
   const projectedLines = lines.map(line => line.map(project));
-  const mergedLines = mergeLines(projectedLines);
+  const croppedLines = cropLines(projectedLines, viewBox);
+  const mergedLines = mergeLines(croppedLines);
   const simplifiedLines = simplifyLines(mergedLines);
   const svgPaths = renderSVGPaths(simplifiedLines);
 
