@@ -31,6 +31,15 @@ async function plotLines(lines) {
   const mergedLines = mergeLines(croppedLines);
   const simplifiedLines = simplifyLines(mergedLines);
 
+  // add bounds for visual debugging
+  simplifiedLines.unshift([
+    [0, 0],
+    [width, 0],
+    [width, height],
+    [0, height],
+    [0, 0]
+  ]);
+
 
   const svgPaths = renderSVGPaths(simplifiedLines);
   document.getElementById('map').innerHTML = svgPaths.join('\n');
