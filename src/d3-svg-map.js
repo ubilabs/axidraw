@@ -25,14 +25,24 @@ async function plotLines(lines) {
     center
   });
 
-  const projectedLines = lines.map(line => line.map(project));
+  const sortedLines = optimizeOrder(lines);
+  const projectedLines = sortedLines.map(line => line.map(project));
   const croppedLines = cropLines(projectedLines, viewBox);
   const mergedLines = mergeLines(croppedLines);
   const simplifiedLines = simplifyLines(mergedLines);
+
+  // add bounds for visual debugging
+  simplifiedLines.unshift([
+    [0, 0],
+    [width, 0],
+    [width, height],
+    [0, height],
+    [0, 0]
+  ]);
+
+
   const svgPaths = renderSVGPaths(simplifiedLines);
-
   document.getElementById('map').innerHTML = svgPaths.join('\n');
-
 
   function logStats(label, lines) {
     console.log(`
@@ -66,8 +76,7 @@ async function plotLines(lines) {
   };
   const projection = getProjection(viewport);
   const geojsonToPath = geoPath(projection);
+  const lines = await loadLines(viewport);
 
-  const sortedLines = optimizeOrder(await loadLines(viewport));
-
-  plotLines(sortedLines);
+  plotLines(lines);
 })();
