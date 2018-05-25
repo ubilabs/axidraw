@@ -66,7 +66,7 @@ async function plotLines(lines) {
     ]);
 
     await axidraw.drawPath(relativeLine);
-    progressBar.progress = i / simplifiedLines.length;
+    progressBar.progress = i / (simplifiedLines.length - 1);
   }
 
   await axidraw.parkPen();
