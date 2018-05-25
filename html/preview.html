@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Axidraw Map Plotter</title>
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.css' rel='stylesheet' />
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
+  <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css'
+    type='text/css' />
+  <style>
+    *,
+    *:after,
+    *:before {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 620px;
+      height: 874px;
+      box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center
+    }
+
+    .map-wrapper {
+      margin-top: 30px;
+      position: relative;
+      width: 400px;
+      height: 400px;
+      overflow: hidden;
+      border-radius: 50%;
+      border: 2px solid black;
+      padding: 4px;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 1px solid black;
+    }
+
+    .mapboxgl-ctrl-geocoder {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 0;
+    }
+
+    a.mapboxgl-ctrl-logo,
+    .mapboxgl-ctrl-attrib.mapboxgl-compact::after {
+      display: none
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="map-wrapper">
+      <div id="map"></div>
+    </div>
+  </div>
+  <button class="print-button">Print</button>
+
+  <script src="preview.js"></script>
+</body>
+
+</html>
