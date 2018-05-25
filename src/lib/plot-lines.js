@@ -6,8 +6,10 @@ import mergeLines from './merge-lines';
 import simplifyLines from './simplify-lines';
 import {renderSVGPaths} from './svg-tools';
 import cropLines from './crop-lines';
+import ProgressBar from './progress-bar';
 
 export default async function plotLines(viewport, debugSVG) {
+  const progressBar = new ProgressBar(document.body);
   const axidraw = await createAxidraw();
   const project = getProjection(viewport);
   const viewBox = [0, 0, viewport.width, viewport.height];
@@ -21,9 +23,9 @@ export default async function plotLines(viewport, debugSVG) {
   if (debugSVG) {
     simplifiedLines.unshift([
       [0, 0],
-      [width, 0],
-      [width, height],
-      [0, height],
+      [viewport.width, 0],
+      [viewport.width, viewport.height],
+      [0, viewport.height],
       [0, 0]
     ]);
 
@@ -44,13 +46,15 @@ export default async function plotLines(viewport, debugSVG) {
   logStats('merged', mergedLines);
   logStats('simplified', simplifiedLines);
 
-  for (const line of simplifiedLines) {
+  for (let i = 0; i < simplifiedLines.length; i++) {
+    const line = simplifiedLines[i];
     const relativeLine = line.map(p => [
       p[0] / viewport.width * 100,
       p[1] / viewport.height * 100
     ]);
 
     await axidraw.drawPath(relativeLine);
+    progressBar.progress = i / (simplifiedLines.length - 1);
   }
 
   await axidraw.parkPen();

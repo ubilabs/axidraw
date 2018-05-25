@@ -3,7 +3,7 @@
 ```sh
 npm i
 # start webpack-dev-server & cncserver
-npm start
+npm start-dev
 ```
 
 CNC-Server: http://localhost:4242
