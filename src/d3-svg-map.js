@@ -1,4 +1,4 @@
-import {plotLines} from './lib/plot-lines';
+import plotLines from './lib/plot-lines';
 
 const width = 200;
 const height = 100;

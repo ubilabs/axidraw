@@ -1,4 +1,4 @@
-import {plotLines} from './lib/plot-lines';
+import plotLines from './lib/plot-lines';
 
 mapboxgl.accessToken =
   'pk.eyJ1IjoidWJpbGFicyIsImEiOiJ4Tm02bDJrIn0.aA51umnsZbzugtBiFLZPoQ';
@@ -17,9 +17,11 @@ map.addControl(
 );
 
 const printButton = document.querySelector('.print-button');
-printButton.addEventListener('click', () => {
+printButton.addEventListener('click', async () => {
   const center = map.getCenter().toArray();
   const zoom = map.getZoom();
 
-  plotLines({width: 200, height: 100, center, zoom});
+  printButton.disabled = true;
+  await plotLines({width: 200, height: 100, center, zoom});
+  printButton.disabled = false;
 });

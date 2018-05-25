@@ -7,7 +7,7 @@ import simplifyLines from './simplify-lines';
 import {renderSVGPaths} from './svg-tools';
 import cropLines from './crop-lines';
 
-export async function plotLines(viewport, debugSVG) {
+export default async function plotLines(viewport, debugSVG) {
   const axidraw = await createAxidraw();
   const project = getProjection(viewport);
   const viewBox = [0, 0, viewport.width, viewport.height];
@@ -52,4 +52,6 @@ export async function plotLines(viewport, debugSVG) {
 
     await axidraw.drawPath(relativeLine);
   }
+
+  await axidraw.parkPen();
 }
