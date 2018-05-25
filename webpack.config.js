@@ -1,6 +1,13 @@
 const HtmlPlugin = require('html-webpack-plugin');
 
-const entries = ['api-test', 'draw-waves', 'd3-svg-map', 'debugger', 'preview'];
+const entries = [
+  'api-test',
+  'draw-waves',
+  'd3-svg-map',
+  'debugger',
+  'preview',
+  'adjust-pen'
+];
 
 module.exports = {
   entry: entries.reduce((paths, entry) => {
