@@ -22,6 +22,9 @@ printButton.addEventListener('click', async () => {
   const zoom = map.getZoom();
 
   printButton.disabled = true;
-  await plotLines({width: 200, height: 100, center, zoom});
+  await plotLines(
+    {width: 400, height: 400, center, zoom: zoom + 9},
+    document.querySelector('#preview')
+  );
   printButton.disabled = false;
 });

@@ -27,14 +27,13 @@
 
     body {
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
     }
 
     .container {
-      width: 620px;
-      height: 874px;
+      width: 496px;
+      height: 700px;
       box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
       display: flex;
       flex-direction: column;
@@ -71,6 +70,18 @@
     .mapboxgl-ctrl-attrib.mapboxgl-compact::after {
       display: none
     }
+
+    .print-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+    }
+
+    svg path {
+      stroke: black;
+      vector-effect: non-scaling-stroke;
+      fill: none;
+    }
   </style>
 </head>
 
@@ -80,6 +91,8 @@
       <div id="map"></div>
     </div>
   </div>
+  <svg id="preview" width="496px" height="700px" viewBox="0,0,496,700"></svg>
+
   <button class="print-button">Print</button>
 
   <script src="preview.js"></script>
