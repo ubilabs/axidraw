@@ -65,6 +65,8 @@ async function plotLines(lines) {
 
     await axidraw.drawPath(relativeLine);
   }
+
+  await axidraw.parkPen();
 }
 
 (async function() {
