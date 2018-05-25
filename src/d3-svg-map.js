@@ -7,7 +7,8 @@ import loadLines from './lib/load-lines';
 import mergeLines from './lib/merge-lines';
 import simplifyLines from './lib/simplify-lines';
 import {renderSVGPaths} from './lib/svg-tools';
-import cropLines from './lib/crop-lines';
+import cropLinesByCircle from './lib/crop-lines-by-circle';
+import getCircle from './lib/get-circle';
 
 const height = 100;
 const width = 200;
@@ -27,9 +28,14 @@ async function plotLines(lines) {
 
   const sortedLines = optimizeOrder(lines);
   const projectedLines = sortedLines.map(line => line.map(project));
-  const croppedLines = cropLines(projectedLines, viewBox);
+  const croppedLines = cropLinesByCircle(projectedLines, [width / 2, height / 2], height / 2);
   const mergedLines = mergeLines(croppedLines);
   const simplifiedLines = simplifyLines(mergedLines);
+  const simplifiedLines = croppedLines;
+
+  simplifiedLines.unshift(
+    getCircle(height / 2, 180, width / 2, height / 2),
+  );
 
   // add bounds for visual debugging
   simplifiedLines.unshift([

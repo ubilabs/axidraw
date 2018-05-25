@@ -1,7 +1,4 @@
-function distance([x1, y1], [x2, y2]) {
-  return (x2 - x1) ** 2 + (y2 - y1) ** 2;
-}
-
+import distance from './distance';
 /**
  * Picks the closest line in regard to a point.
  * @param {Array<number>} point  The origin point
