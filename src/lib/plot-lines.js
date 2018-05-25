@@ -19,6 +19,14 @@ export async function plotLines(viewport, debugSVG) {
   const simplifiedLines = simplifyLines(mergedLines);
 
   if (debugSVG) {
+    simplifiedLines.unshift([
+      [0, 0],
+      [width, 0],
+      [width, height],
+      [0, height],
+      [0, 0]
+    ]);
+
     const svgPaths = renderSVGPaths(simplifiedLines);
     debugSVG.innerHTML = svgPaths.join('\n');
   }
