@@ -2,11 +2,11 @@ import createAxidraw from "./lib/axidraw";
 
 const button = document.getElementById('button');
 const info = document.getElementById('info');
+let axidraw;
 
 async function initAxidraw() {
   info.innerHTML = `loading …`;
-  const axidraw = await createAxidraw();
-  window.axidraw = axidraw;
+  axidraw = await createAxidraw();
   initPosition();
 }
 
