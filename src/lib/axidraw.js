@@ -39,13 +39,19 @@ class Axidraw {
   async resetMotor() {
     await fetch(`${API_URL}/motors`, {method: 'DELETE'});
   }
+
+  /**
+   * Set pen state up and move to 0,0.
+   */
+  async parkPen() {
+    await this.setPenState('state=up');
+    await this.setPenState(`x=0&y=0`);
+    await this.resetMotor();
+  }
 }
 
 export default async function() {
   const axidraw = new Axidraw();
-
-  await axidraw.setPenState('state=up');
-  await axidraw.resetMotor();
-
-  return new Axidraw();
+  await axidraw.parkPen();
+  return axidraw;
 }
