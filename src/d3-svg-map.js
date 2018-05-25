@@ -18,7 +18,7 @@ const center = [9.995, 53.565];
 const viewBox = [0, 0, width, height];
 
 async function plotLines(lines) {
-  const progressBar = (window.bar = new ProgressBar(document.body));
+  const progressBar = new ProgressBar(document.body);
   const axidraw = await createAxidraw();
   const project = getProjection({
     width,
