@@ -4,8 +4,28 @@
     vector-effect: non-scaling-stroke;
     fill: none;
   }
+
   svg path:nth-child(2n) {
     stroke: blue;
+  }
+
+  .progress-bar {
+    width: 400px;
+    height: 9px;
+    border: 1pt solid black;
+    box-sizing: border-box;
+    margin-top: 10px;
+  }
+
+  .progress-bar__bar {
+    height: 100%;
+    background: repeating-linear-gradient( 45deg,
+    #000,
+    #000 2px,
+    #fff 2px,
+    #fff 4px);
+    width: 0%;
+    transition: width 1s ease;
   }
 </style>
 
