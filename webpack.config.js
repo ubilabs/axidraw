@@ -5,6 +5,7 @@ const entries = [
   'draw-waves',
   'd3-svg-map',
   'debugger',
+  'preview',
   'adjust-pen'
 ];
 
