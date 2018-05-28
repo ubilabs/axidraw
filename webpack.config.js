@@ -6,7 +6,8 @@ const entries = [
   'd3-svg-map',
   'debugger',
   'preview',
-  'adjust-pen'
+  'adjust-pen',
+  'svg-font-test'
 ];
 
 module.exports = {
