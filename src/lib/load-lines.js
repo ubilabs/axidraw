@@ -5,7 +5,7 @@ import getProjection from './get-projection';
 
 const API_KEY = 'fApLQBTwQbaIclmV0CoOQA';
 const TILE_BASE_URL = 'https://tile.nextzen.org/tilezen/vector/v1/256/all/';
-const EXCLUDE_ROAD_TYPES = ['ferry', 'path', 'minor_road'];
+const EXCLUDE_ROAD_TYPES = ['ferry', 'path', 'minor_road', 'rail'];
 
 /**
  * Loads vector tiles for a given viewport.
