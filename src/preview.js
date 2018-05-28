@@ -10,6 +10,8 @@ const map = new mapboxgl.Map({
   zoom: 11
 });
 
+map.dragRotate.disable();
+
 map.addControl(
   new MapboxGeocoder({
     accessToken: mapboxgl.accessToken
