@@ -8,6 +8,7 @@ import {renderSVGPaths} from './svg-tools';
 import cropLines from './crop-lines-by-circle';
 import ProgressBar from './progress-bar';
 import getCircle from './get-circle';
+import {move} from './scale-move';
 
 export default async function plotLines(viewport, debugSVG) {
   const progressBar = new ProgressBar(document.body);
@@ -40,7 +41,9 @@ export default async function plotLines(viewport, debugSVG) {
       [0, 0]
     ]);
 
-    const svgPaths = renderSVGPaths(simplifiedLines);
+    const movedLines = move(simplifiedLines, {x: 100 / 2, y: 30})
+
+    const svgPaths = renderSVGPaths(movedLines);
     debugSVG.innerHTML = svgPaths.join('\n');
   }
 
