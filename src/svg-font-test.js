@@ -4,5 +4,5 @@ import {renderSVGPaths} from './lib/svg-tools';
 (async function(){
   const text = 'This is a Test';
   const lines = await convertTextToCoords(text);
-  document.body.innerHTML += `<svg>${renderSVGPaths(lines)}</svg>`;
+  document.body.innerHTML += `<svg>${renderSVGPaths(lines).join('')}</svg>`;
 })();
