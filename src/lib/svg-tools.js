@@ -1,4 +1,8 @@
+import segments from 'svg-line-segments';
+import linearize from 'svg-linearize';
+
 const PRECISION = 3;
+const TOLERANCE = 0.5;
 
 /**
  * Converts an array of screen coordinates into SVG paths.
@@ -16,4 +20,57 @@ export function renderSVGPaths(lines) {
 
     return `<path d="${path.join(' ')}"/>`;
   });
-};
+}
+
+/**
+ * Returns the svg with paths only
+ * @param {Object} svg The svg element
+ */
+function convertLinesToPaths(svg) {
+  const newPathsOnly = svg.cloneNode(true);
+  const lines = newPathsOnly.querySelectorAll('line');
+
+  for (let i = 0; i < lines.length; i++) {
+    const x1 = lines[i].getAttribute('x1');
+    const y1 = lines[i].getAttribute('y1');
+    const x2 = lines[i].getAttribute('x2');
+    const y2 = lines[i].getAttribute('y2');
+
+    const pathElement = document.createElement('path');
+    pathElement.setAttribute('d', 'M ' + x1 + ',' + y1 + ' L ' + x2 + ',' + y2);
+
+    lines[i].parentNode.replaceChild(pathElement, lines[i]);
+  }
+
+  return newPathsOnly;
+}
+
+/**
+ * Returns the svg in screen coordinates
+ * @param {Object} svg    		The svg element
+ * @param {number} tolerance	The tolerance for segmentation
+ * @return {Array<array>} 		The svg coordinates
+ */
+export function convertSVGToCoords(svg, tolerance) {
+  const svgPathsOnly = convertLinesToPaths(svg);
+  const linearizedSvg = linearize(svgPathsOnly, {
+    tolerance: tolerance || TOLERANCE
+  });
+  const coords = segments(linearizedSvg);
+
+  return coords;
+}
+
+/**
+ * Returns the positioned and scaled coordinates
+ * @param {Array<array>}	List of screen coordinates
+ * @param {number} x      The left position
+ * @param {number} y      The top position
+ * @param {number} zoom   The zoom factor
+ * @return {Array<array>} The positioned and scaled screen coordinates
+ */
+export function positionAndScaleCoords(coords, x, y, zoom) {
+  return coords.map(line =>
+    line.map(coord => [coord[0] * zoom + x, coord[1] * zoom + y])
+  );
+}
