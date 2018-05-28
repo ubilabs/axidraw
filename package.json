@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Axidraw experiments",
   "dependencies": {
-    "simplify-js": "^1.2.3"
+    "line2": "^0.2.1",
+    "simplify-js": "^1.2.3",
+    "vec2": "^1.6.0"
   },
   "devDependencies": {
     "@tweenjs/tween.js": "^17.2.0",
