@@ -18,10 +18,11 @@ export default async function plotLines(viewport, debugSVG) {
     radius: viewport.height / 2 - 4
   };
 
-  const sortedLines = optimizeOrder(await loadLines(viewport));
-  const projectedLines = sortedLines.map(line => line.map(project));
+  const lines = await loadLines(viewport);
+  const projectedLines = lines.map(line => line.map(project));
   const croppedLines = cropLines(projectedLines, circle.center, circle.radius);
-  const mergedLines = mergeLines(croppedLines);
+  const sortedLines = optimizeOrder(croppedLines);
+  const mergedLines = mergeLines(sortedLines);
   const simplifiedLines = simplifyLines(mergedLines);
 
   simplifiedLines.unshift(
