@@ -19,10 +19,7 @@ async function loadFont() {
  * @param {Object} options Optional options for TextToSVG.
  *   Default {y: 10, fontSize: 10}
  */
-export default async function (text, options = {
-  y: 10,
-  fontSize: 10
-}) {
+export default async function (text, options = {y: 50, fontSize: 50}) {
   const textToSVG = await loadFont();
   const path = textToSVG.getD(text, options);
 
