@@ -24,7 +24,7 @@ async function initPosition() {
 
 async function adjustPen() {
   info.innerHTML = `Setting pen state down…`;
-  await axidraw.setPenState('state=draw');
+  await axidraw.setPenState('state=0.8');
   info.innerHTML = `Please insert pen at lowest position.`;
   button.onclick = parkPen;
 }
