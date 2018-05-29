@@ -32,8 +32,9 @@ export default async function plotLines(viewport, debugSVG) {
 
   simplifiedLines.unshift(
     getCircle(circle.radius, 180, circle.center[0], circle.center[1]),
-    getCircle(circle.radius + 1, 180, circle.center[0], circle.center[1]),
-    getCircle(circle.radius + 1.4, 180, circle.center[0], circle.center[1])
+    getCircle(circle.radius + 5, 180, circle.center[0], circle.center[1]),
+    getCircle(circle.radius + 5.3, 180, circle.center[0], circle.center[1]),
+    getCircle(circle.radius + 5.6, 180, circle.center[0], circle.center[1])
   );
 
   if (debugSVG) {
