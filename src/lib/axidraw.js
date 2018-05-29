@@ -46,7 +46,6 @@ class Axidraw {
   async parkPen() {
     await this.setPenState('state=up');
     await this.setPenState(`x=0&y=0`);
-    await this.resetMotor();
   }
 }
 
