@@ -5,6 +5,7 @@ import getProjection from './get-projection';
 
 const API_KEY = 'fApLQBTwQbaIclmV0CoOQA';
 const TILE_BASE_URL = 'https://tile.nextzen.org/tilezen/vector/v1/256/all/';
+const EXCLUDE_ROAD_TYPES = ['ferry', 'path', 'minor_road', 'rail'];
 
 /**
  * Loads vector tiles for a given viewport.
@@ -62,11 +63,12 @@ export default async function(viewport) {
   for (const tileData of tiles) {
     features.push(
       ...tileData.roads.features.filter(
-        feature => feature.properties.kind != 'ferry'
+        feature => !EXCLUDE_ROAD_TYPES.includes(feature.properties.kind)
       ),
       ...tileData.water.features.filter(
         feature =>
-          feature.properties.boundary && feature.geometry.type != 'Point'
+          feature.properties.boundary &&
+          feature.geometry.type != 'Point'
       )
     );
   }
