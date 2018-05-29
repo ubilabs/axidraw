@@ -10,6 +10,8 @@ import ProgressBar from './progress-bar';
 import getCircle from './get-circle';
 import {move, scale, scaleAndMove} from './scale-move';
 import {logoCoords} from '../assets/ubilabs-logo'
+import convertTextToCoords from './convert-text-to-coords';
+
 const PAPER_SIZE = {width: 496, height: 700};
 
 export default async function plotLines(viewport, debugSVG) {
@@ -35,8 +37,10 @@ export default async function plotLines(viewport, debugSVG) {
   );
 
   if (debugSVG) {
-    simplifiedLines.unshift([
+    const movedLines = move(simplifiedLines, {x: 100 / 2, y: 30})
     const scaledLogo = scaleAndMove(logoCoords, {scale: 0.25, x: 200, y: 640})
+
+    movedLines.unshift([
       [0, 0],
       [PAPER_SIZE.width, 0],
       [PAPER_SIZE.width, PAPER_SIZE.height],
@@ -44,12 +48,22 @@ export default async function plotLines(viewport, debugSVG) {
       [0, 0]
     ]);
 
-    const movedLines = move(simplifiedLines, {x: 100 / 2, y: 30})
     movedLines.push(...scaledLogo);
+
+    const text = 'HAMBURG';
+    const lines = await convertTextToCoords(text, {
+      x: PAPER_SIZE.width / 2,
+      y: 500,
+      fontSize: 40,
+      anchor: 'center middle'
+    });
+
+    movedLines.push(...lines);
 
     const svgPaths = renderSVGPaths(movedLines);
     debugSVG.innerHTML = svgPaths.join('\n');
   }
+
 
   const stats = [];
 

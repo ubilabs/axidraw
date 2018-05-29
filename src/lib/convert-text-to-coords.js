@@ -39,7 +39,7 @@ export default async function (text, options = {y: 50, fontSize: 50}) {
   // convert SVG to points
   const parser = new DOMParser();
   const svgDom = parser.parseFromString(svg, 'image/svg+xml');
-  const lines = convertSVGToCoords(svgDom, 0.1);
+  const lines = convertSVGToCoords(svgDom, 0.3);
 
   return lines;
 }
