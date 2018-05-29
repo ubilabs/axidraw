@@ -1,4 +1,4 @@
-import plotLines from './lib/plot-lines';
+import plotMap from './lib/plot-map';
 
 mapboxgl.accessToken =
   'pk.eyJ1IjoidWJpbGFicyIsImEiOiJ4Tm02bDJrIn0.aA51umnsZbzugtBiFLZPoQ';
@@ -24,7 +24,7 @@ printButton.addEventListener('click', async () => {
   const zoom = map.getZoom();
 
   printButton.disabled = true;
-  await plotLines(
+  await plotMap(
     {width: 400, height: 400, center, zoom: zoom + 9},
     document.querySelector('#preview')
   );
