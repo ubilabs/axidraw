@@ -31,19 +31,19 @@ const paperBounds = [
   [0, 0]
 ];
 
-export default async function plotLines(viewport, debugSVG) {
+export default async function plotLines(options) {
   const progressBar = new ProgressBar(document.body);
   const axidraw = await createAxidraw();
 
   const coords = [];
 
-  const project = getProjection(viewport);
+  const project = getProjection(options);
   const circle = {
-    center: [viewport.width / 2, viewport.height /  2],
-    radius: viewport.height / 2 - 4
+    center: [options.width / 2, options.height /  2],
+    radius: options.height / 2 - 4
   };
 
-  const mapPaths = await loadLines(viewport);
+  const mapPaths = await loadLines(options);
   const projectedMap = mapPaths.map(line => line.map(project));
   const croppedMap = cropLines(projectedMap, circle.center, circle.radius);
   const sortedMapPaths = optimizeOrder(croppedMap);
@@ -60,7 +60,7 @@ export default async function plotLines(viewport, debugSVG) {
   const centeredMap = move(simplifiedMap, {x: 100 / 2, y: 30})
   const scaledLogo = scaleAndMove(logoCoords, {scale: 0.25, x: 200, y: 640})
 
-  const text = 'HAMBURG';
+  const text = options.label || 'HAMBURG';
   const textCoords = await convertTextToCoords(text, {
     x: PAPER_SIZE.width / 2,
     y: 500,
@@ -76,7 +76,7 @@ export default async function plotLines(viewport, debugSVG) {
   );
 
   const svgPaths = renderSVGPaths(coords);
-  debugSVG.innerHTML = svgPaths.join('\n');
+  options.svg.innerHTML = svgPaths.join('\n');
 
   const stats = [];
 

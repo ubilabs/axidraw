@@ -11,6 +11,8 @@
   <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
   <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css'
     type='text/css' />
+
+  <link href="https://fonts.googleapis.com/css?family=Raleway:100" rel="stylesheet">
   <style>
     *,
     *:after,
@@ -82,6 +84,21 @@
       vector-effect: non-scaling-stroke;
       fill: none;
     }
+
+    #label {
+      font-family: 'Raleway', sans-serif;
+      display: block;
+      font-size: 38px;
+      margin-top: 45px;
+      padding: 0 10px;
+      text-transform: uppercase;
+    }
+
+    #logo svg {
+      margin-top: 119px;
+      width: 105px;
+      height: 50px;
+    }
   </style>
 </head>
 
@@ -90,6 +107,7 @@
     <div class="map-wrapper">
       <div id="map"></div>
     </div>
+    <div id="label" contentEditable>HAMBURG</div>
   </div>
   <svg id="preview" width="496px" height="700px" viewBox="0,0,496,700"></svg>
 
