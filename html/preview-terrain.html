@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Axidraw Terrain Plotter</title>
+  <style>
+    *,
+    *:after,
+    *:before {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 496px;
+      height: 700px;
+      box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center
+    }
+
+    .print-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+    }
+
+    svg path {
+      stroke: black;
+      vector-effect: non-scaling-stroke;
+      fill: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <svg id="preview" width="496px" height="700px" viewBox="0,0,496,700"></svg>
+  </div>
+
+  <button class="print-button">Print</button>
+</body>
+
+</html>
