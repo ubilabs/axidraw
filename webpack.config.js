@@ -6,6 +6,7 @@ const entries = [
   'd3-svg-map',
   'debugger',
   'preview',
+  'preview-terrain',
   'adjust-pen',
   'svg-font-test'
 ];
