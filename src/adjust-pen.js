@@ -11,6 +11,8 @@ async function initAxidraw() {
 }
 
 async function initPosition() {
+  await axidraw.resetMotor();
+
   info.innerHTML = `
     Axidraw ready. <br />
     Move robot to the initial position [0, 0].
@@ -30,7 +32,6 @@ async function adjustPen() {
 async function parkPen() {
   info.innerHTML = `Setting pen state up…`;
   await axidraw.setPenState('state=up');
-  await axidraw.resetMotor();
   info.innerHTML = `Done. You are now ready to draw!`;
   button.disabled = true;
 }
