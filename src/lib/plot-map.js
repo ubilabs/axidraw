@@ -47,18 +47,22 @@ export default async function plotLines(viewport, debugSVG) {
     debugSVG.innerHTML = svgPaths.join('\n');
   }
 
+  const stats = [];
+
   function logStats(label, lines) {
-    console.log(`
-      ${label}:
-      ${lines.length} lines
-      ${lines.reduce((acc, line) => acc + line.length, 0)} points
-    `);
+    stats.push({
+      label: label,
+      lines: lines.length,
+      points: lines.reduce((acc, line) => acc + line.length, 0)
+    });
   }
 
   logStats('original', projectedLines);
   logStats('cropped', croppedLines);
   logStats('merged', mergedLines);
   logStats('simplified', simplifiedLines);
+
+  console.table(stats);
 
   for (let i = 0; i < simplifiedLines.length; i++) {
     const line = simplifiedLines[i];

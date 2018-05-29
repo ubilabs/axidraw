@@ -39,14 +39,15 @@ function pickClosestLine(point, lines) {
  * @return {Array<array>}  The lines in an optimized order
  */
 export function optimizeOrder(lines) {
+  const linesCopy = lines.slice(0);
   const optimized = [];
 
-  optimized.push(lines.pop());
+  optimized.push(linesCopy.pop());
 
-  while (lines.length) {
+  while (linesCopy.length) {
     const previousLine = optimized[optimized.length - 1];
     const endpoint = previousLine[previousLine.length - 1];
-    const nextLine = pickClosestLine(endpoint, lines);
+    const nextLine = pickClosestLine(endpoint, linesCopy);
 
     optimized.push(nextLine);
   }
