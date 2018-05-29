@@ -9,6 +9,7 @@ import cropLines from './crop-lines-by-circle';
 import ProgressBar from './progress-bar';
 import getCircle from './get-circle';
 import {move} from './scale-move';
+const PAPER_SIZE = {width: 496, height: 700};
 
 export default async function plotLines(viewport, debugSVG) {
   const progressBar = new ProgressBar(document.body);
@@ -35,9 +36,9 @@ export default async function plotLines(viewport, debugSVG) {
   if (debugSVG) {
     simplifiedLines.unshift([
       [0, 0],
-      [viewport.width, 0],
-      [viewport.width, viewport.height],
-      [0, viewport.height],
+      [PAPER_SIZE.width, 0],
+      [PAPER_SIZE.width, PAPER_SIZE.height],
+      [0, PAPER_SIZE.height],
       [0, 0]
     ]);
 
