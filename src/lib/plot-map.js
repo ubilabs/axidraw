@@ -8,7 +8,8 @@ import {renderSVGPaths} from './svg-tools';
 import cropLines from './crop-lines-by-circle';
 import ProgressBar from './progress-bar';
 import getCircle from './get-circle';
-import {move} from './scale-move';
+import {move, scale, scaleAndMove} from './scale-move';
+import {logoCoords} from '../assets/ubilabs-logo'
 const PAPER_SIZE = {width: 496, height: 700};
 
 export default async function plotLines(viewport, debugSVG) {
@@ -35,6 +36,7 @@ export default async function plotLines(viewport, debugSVG) {
 
   if (debugSVG) {
     simplifiedLines.unshift([
+    const scaledLogo = scaleAndMove(logoCoords, {scale: 0.25, x: 200, y: 640})
       [0, 0],
       [PAPER_SIZE.width, 0],
       [PAPER_SIZE.width, PAPER_SIZE.height],
@@ -43,6 +45,7 @@ export default async function plotLines(viewport, debugSVG) {
     ]);
 
     const movedLines = move(simplifiedLines, {x: 100 / 2, y: 30})
+    movedLines.push(...scaledLogo);
 
     const svgPaths = renderSVGPaths(movedLines);
     debugSVG.innerHTML = svgPaths.join('\n');
