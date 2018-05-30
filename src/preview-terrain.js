@@ -1,5 +1,6 @@
 import perspectiveCamera from 'perspective-camera';
 import {renderSVGPaths} from './lib/svg-tools';
+import plotCoords from './lib/plot-coords';
 
 const TILE_SIZE = 256;
 const LINES = 60;
@@ -34,15 +35,13 @@ const getTileUrl = (x,y,z) => `https://api.mapbox.com/v4/mapbox.terrain-rgb/${z}
         const ihx = Math.floor(ix / LINES * TILE_SIZE);
         const ihz = Math.floor(iz / LINES * TILE_SIZE);
         const index = ihx * TILE_SIZE + ihz;
-        
+
         const y = heights[index] / -40; // TODO: calculate the correct height
         return camera.project([x, y, z]);
       })
     );
-  
-  const paths = renderSVGPaths(lines);
-  const svg = document.querySelector('#preview');
-  svg.innerHTML = paths.join('\n');
+
+  plotCoords(lines, document.getElementById('preview'));
 }())
 
 /**

@@ -36,8 +36,7 @@ printButton.addEventListener('click', async () => {
     height: 400,
     center,
     zoom: zoom + 9,
-    label: labelText,
-    svg: document.querySelector('#preview')
+    label: labelText
   });
   printButton.disabled = false;
 });
