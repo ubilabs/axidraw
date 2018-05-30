@@ -13,6 +13,8 @@
     type='text/css' />
 
   <link href="https://fonts.googleapis.com/css?family=Raleway:100" rel="stylesheet">
+
+  <link href="/assets/preview.css" rel="stylesheet">
   <style>
     *,
     *:after,
@@ -73,16 +75,15 @@
       display: none
     }
 
-    .print-button {
+    #action-buttons {
       position: fixed;
-      top: 20px;
-      right: 20px;
+      top: 10px;
+      right: 10px;
+      padding: 10px;
     }
 
-    svg path {
-      stroke: black;
-      vector-effect: non-scaling-stroke;
-      fill: none;
+    #action-buttons button {
+      padding: 4px 8px;
     }
 
     #label {
@@ -119,9 +120,12 @@
 
     </div>
   </div>
-  <svg id="preview" width="496px" height="700px" viewBox="0,0,496,700"></svg>
+  <svg id="preview" viewBox="0,0,496,700"></svg>
 
-  <button class="print-button">Print</button>
+  <div id="action-buttons">
+    <button class="preview-button">Update Preview</button>
+    <button class="print-button" disabled>Print</button>
+  </div>
 
 </body>
 

@@ -8,9 +8,11 @@ export default class ProgressBar {
 
     this.container.appendChild(this.bar);
     root.appendChild(this.container);
+    this.container.style.display = "none";
   }
 
   set progress(progress) {
+    this.container.style.display = "block";
     this.bar.style.width = `${progress * 100}%`;
   }
 }

@@ -1,26 +1,18 @@
-import createAxidraw from './axidraw';
 import getProjection from './get-projection';
 import {optimizeOrder} from './optimize-lines';
 import loadLines from './load-lines';
 import mergeLines from './merge-lines';
 import simplifyLines from './simplify-lines';
-import {renderSVGPaths} from './svg-tools';
 import cropLines from './crop-lines-by-circle';
-import ProgressBar from './progress-bar';
 import getCircle from './get-circle';
 import {move, scale, scaleAndMove} from './scale-move';
 import {logoCoords} from '../assets/ubilabs-logo'
 import convertTextToCoords from './convert-text-to-coords';
+import Plotter from './plot-coords';
 
 const PAPER_SIZE = {
   width: 496,
   height: 700
-};
-
-const BOT_SCALE = {
-  ratio: 12000 / 8720,
-  factor: 14.2,
-  offset: 20
 };
 
 const paperBounds = [
@@ -31,9 +23,14 @@ const paperBounds = [
   [0, 0]
 ];
 
+const CIRCLE_OFFSET = {
+  x: 100 / 2,
+  y: 30
+};
+
+let plotter = null;
+
 export default async function plotLines(options) {
-  const progressBar = new ProgressBar(document.body);
-  const axidraw = await createAxidraw();
 
   const coords = [];
 
@@ -43,24 +40,9 @@ export default async function plotLines(options) {
     radius: options.height / 2 - 4
   };
 
-  const mapPaths = await loadLines(options);
-  const projectedMap = mapPaths.map(line => line.map(project));
-  const croppedMap = cropLines(projectedMap, circle.center, circle.radius);
-  const sortedMapPaths = optimizeOrder(croppedMap);
-  const mergedMapPaths = mergeLines(sortedMapPaths);
-  const simplifiedMap = simplifyLines(mergedMapPaths);
-
-  simplifiedMap.unshift(
-    getCircle(circle.radius, 180, circle.center[0], circle.center[1]),
-    getCircle(circle.radius + 5, 180, circle.center[0], circle.center[1]),
-    getCircle(circle.radius + 5.5, 180, circle.center[0], circle.center[1]),
-    getCircle(circle.radius + 6, 180, circle.center[0], circle.center[1])
-  );
-
-  const centeredMap = move(simplifiedMap, {x: 100 / 2, y: 30})
   const scaledLogo = scaleAndMove(logoCoords, {scale: 0.25, x: 200, y: 640})
 
-  const text = options.label || 'HAMBURG';
+  const text = options.label || 'UBILABS';
   const textCoords = await convertTextToCoords(text, {
     x: PAPER_SIZE.width / 2,
     y: 500,
@@ -68,15 +50,41 @@ export default async function plotLines(options) {
     anchor: 'center middle'
   });
 
-  coords.push(
-    ...centeredMap,
+  const circles = [
+    getCircle(circle.radius, 180, circle.center[0], circle.center[1]),
+    getCircle(circle.radius + 5, 180, circle.center[0], circle.center[1]),
+    getCircle(circle.radius + 5.5, 180, circle.center[0], circle.center[1]),
+    getCircle(circle.radius + 6, 180, circle.center[0], circle.center[1])
+  ];
+
+  const movedCircles = move(circles, CIRCLE_OFFSET);
+
+  if (!plotter) {
+    plotter = new Plotter();
+  }
+
+  plotter.coords = [
     ...textCoords,
+    ...scaledLogo,
+    ...movedCircles
+  ];
+
+  const mapPaths = await loadLines(options);
+  const projectedPaths = mapPaths.map(line => line.map(project));
+  const croppedPaths = cropLines(projectedPaths, circle.center, circle.radius);
+  const sortedMapPaths = optimizeOrder(croppedPaths);
+  const mergedMapPaths = mergeLines(sortedMapPaths);
+  const simplifiedPaths = simplifyLines(mergedMapPaths);
+
+  const centeredMap = move(simplifiedPaths, CIRCLE_OFFSET)
+
+  coords.push(
+    ...movedCircles,
+    ...textCoords,
+    ...centeredMap,
     ...scaledLogo,
     paperBounds
   );
-
-  const svgPaths = renderSVGPaths(coords);
-  options.svg.innerHTML = svgPaths.join('\n');
 
   const stats = [];
 
@@ -88,23 +96,20 @@ export default async function plotLines(options) {
     });
   }
 
-  logStats('original', projectedMap);
-  logStats('cropped', croppedMap);
+  logStats('original', projectedPaths);
+  logStats('cropped', croppedPaths);
   logStats('merged', mergedMapPaths);
-  logStats('simplified', simplifiedMap);
+  logStats('simplified', simplifiedPaths);
   console.table(stats);
 
+  plotter.coords = coords;
 
-  for (let i = 0; i < coords.length; i++) {
-    const line = coords[i];
-    const relativeLine = line.map(p => [
-      p[0] / BOT_SCALE.factor + BOT_SCALE.offset,
-      p[1] / BOT_SCALE.factor * BOT_SCALE.ratio
-    ]);
+  const printButton = document.querySelector('.print-button');
+  printButton.disabled = false;
 
-    await axidraw.drawPath(relativeLine);
-    progressBar.progress = i / (coords.length - 1);
-  }
-
-  await axidraw.parkPen();
+  printButton.onclick = function(){
+    plotter.print();
+    printButton.disabled = true;
+    document.querySelector('.preview-button').disabled = true;
+  };
 }
