@@ -31,7 +31,9 @@
     "start-dev": "npm-run-all -p webpack-server cncserver-simulator",
     "webpack-server": "webpack-dev-server --mode development",
     "cncserver-simulator": "node ./node_modules/cncserver --botType=axidraw",
+    "postcncserver-simulator": "npm run clean-up",
     "cncserver": "node ./node_modules/cncserver --botType=axidraw --serialPath=$(node get-port.js)",
+    "postcncserver": "npm run clean-up",
     "clean-up": "rm /tmp/app.cncserver"
   },
   "repository": {
