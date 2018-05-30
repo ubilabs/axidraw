@@ -75,10 +75,15 @@
       display: none
     }
 
-    .print-button {
+    #action-buttons {
       position: fixed;
-      top: 20px;
-      right: 20px;
+      top: 10px;
+      right: 10px;
+      padding: 10px;
+    }
+
+    #action-buttons button {
+      padding: 4px 8px;
     }
 
     #label {
@@ -117,7 +122,10 @@
   </div>
   <svg id="preview" viewBox="0,0,496,700"></svg>
 
-  <button class="print-button">Print</button>
+  <div id="action-buttons">
+    <button class="preview-button">Update Preview</button>
+    <button class="print-button" disabled>Print</button>
+  </div>
 
 </body>
 
