@@ -18,8 +18,10 @@ export default class Plotter {
   set coords(coords) {
     this._coords = coords;
 
-    const paths = renderSVGPaths(coords);
-    this.svgContainer.innerHTML = paths.join('\n');
+    this.svgPaths = renderSVGPaths(coords, {renderAs: 'nodes'});
+    this.svgPaths.forEach(path => {
+      this.svgContainer.appendChild(path)
+    });
   }
 
   async print() {
@@ -27,14 +29,23 @@ export default class Plotter {
       this.axidraw = await createAxidraw();
     }
 
+    this.svgPaths.forEach(path => {
+      path.setAttribute('class', 'pending');
+    });
+
     for (let i = 0; i < this._coords.length; i++) {
       const line = this._coords[i];
+      const path = this.svgPaths[i];
+
+      path.setAttribute('class', 'current');
+
       const relativeLine = line.map(p => [
         p[0] / BOT_SCALE.factor + BOT_SCALE.offset,
         p[1] / BOT_SCALE.factor * BOT_SCALE.ratio
       ]);
 
       await this.axidraw.drawPath(relativeLine);
+      path.removeAttribute('class');
       this.progressBar.progress = i / (this._coords.length - 1);
     }
 
