@@ -18,15 +18,26 @@ map.addControl(
   })
 );
 
+const label = document.getElementById('label');
+let labelText = "HAMBURG";
+
+label.addEventListener('input', event => {
+  labelText = label.innerText.toUpperCase();
+});
+
 const printButton = document.querySelector('.print-button');
 printButton.addEventListener('click', async () => {
   const center = map.getCenter().toArray();
   const zoom = map.getZoom();
 
   printButton.disabled = true;
-  await plotMap(
-    {width: 400, height: 400, center, zoom: zoom + 9},
-    document.querySelector('#preview')
-  );
+  await plotMap({
+    width: 400,
+    height: 400,
+    center,
+    zoom: zoom + 9,
+    label: labelText,
+    svg: document.querySelector('#preview')
+  });
   printButton.disabled = false;
 });
