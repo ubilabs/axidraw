@@ -1,6 +1,6 @@
 import perspectiveCamera from 'perspective-camera';
 import {renderSVGPaths} from './lib/svg-tools';
-import plotCoords from './lib/plot-coords';
+import Plotter from './lib/plot-coords';
 
 const TILE_SIZE = 256;
 const LINES = 60;
@@ -41,7 +41,13 @@ const getTileUrl = (x,y,z) => `https://api.mapbox.com/v4/mapbox.terrain-rgb/${z}
       })
     );
 
-  plotCoords(lines, document.getElementById('preview'));
+  const plotter = new Plotter(lines);
+  document.querySelector('.print-button').onclick = function(){
+    console.log("print");
+    plotter.print();
+
+  }
+
 }())
 
 /**

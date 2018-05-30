@@ -8,7 +8,7 @@ import getCircle from './get-circle';
 import {move, scale, scaleAndMove} from './scale-move';
 import {logoCoords} from '../assets/ubilabs-logo'
 import convertTextToCoords from './convert-text-to-coords';
-import plot from './plot-coords';
+import Plotter from './plot-coords';
 
 const PAPER_SIZE = {
   width: 496,
@@ -23,6 +23,13 @@ const paperBounds = [
   [0, 0]
 ];
 
+const CIRCLE_OFFSET = {
+  x: 100 / 2,
+  y: 30
+};
+
+let plotter = null;
+
 export default async function plotLines(options) {
 
   const coords = [];
@@ -33,21 +40,6 @@ export default async function plotLines(options) {
     radius: options.height / 2 - 4
   };
 
-  const mapPaths = await loadLines(options);
-  const projectedPaths = mapPaths.map(line => line.map(project));
-  const croppedPaths = cropLines(projectedPaths, circle.center, circle.radius);
-  const sortedMapPaths = optimizeOrder(croppedPaths);
-  const mergedMapPaths = mergeLines(sortedMapPaths);
-  const simplifiedPaths = simplifyLines(mergedMapPaths);
-
-  simplifiedPaths.unshift(
-    getCircle(circle.radius, 180, circle.center[0], circle.center[1]),
-    getCircle(circle.radius + 5, 180, circle.center[0], circle.center[1]),
-    getCircle(circle.radius + 5.5, 180, circle.center[0], circle.center[1]),
-    getCircle(circle.radius + 6, 180, circle.center[0], circle.center[1])
-  );
-
-  const centeredMap = move(simplifiedPaths, {x: 100 / 2, y: 30})
   const scaledLogo = scaleAndMove(logoCoords, {scale: 0.25, x: 200, y: 640})
 
   const text = options.label || 'UBILABS';
@@ -58,9 +50,38 @@ export default async function plotLines(options) {
     anchor: 'center middle'
   });
 
-  coords.push(
-    ...centeredMap,
+  const circles = [
+    getCircle(circle.radius, 180, circle.center[0], circle.center[1]),
+    getCircle(circle.radius + 5, 180, circle.center[0], circle.center[1]),
+    getCircle(circle.radius + 5.5, 180, circle.center[0], circle.center[1]),
+    getCircle(circle.radius + 6, 180, circle.center[0], circle.center[1])
+  ];
+
+  const movedCircles = move(circles, CIRCLE_OFFSET);
+
+  if (!plotter) {
+    plotter = new Plotter();
+  }
+
+  plotter.coords = [
     ...textCoords,
+    ...scaledLogo,
+    ...movedCircles
+  ];
+
+  const mapPaths = await loadLines(options);
+  const projectedPaths = mapPaths.map(line => line.map(project));
+  const croppedPaths = cropLines(projectedPaths, circle.center, circle.radius);
+  const sortedMapPaths = optimizeOrder(croppedPaths);
+  const mergedMapPaths = mergeLines(sortedMapPaths);
+  const simplifiedPaths = simplifyLines(mergedMapPaths);
+
+  const centeredMap = move(simplifiedPaths, CIRCLE_OFFSET)
+
+  coords.push(
+    ...movedCircles,
+    ...textCoords,
+    ...centeredMap,
     ...scaledLogo,
     paperBounds
   );
@@ -81,6 +102,14 @@ export default async function plotLines(options) {
   logStats('simplified', simplifiedPaths);
   console.table(stats);
 
-  const svg = document.getElementById('preview');
-  plot(coords, svg);
+  plotter.coords = coords;
+
+  const printButton = document.querySelector('.print-button');
+  printButton.disabled = false;
+
+  printButton.onclick = function(){
+    plotter.print();
+    printButton.disabled = true;
+    document.querySelector('.preview-button').disabled = true;
+  };
 }

@@ -25,12 +25,12 @@ label.addEventListener('input', event => {
   labelText = label.innerText.toUpperCase();
 });
 
-const printButton = document.querySelector('.print-button');
-printButton.addEventListener('click', async () => {
+const previewButton = document.querySelector('.preview-button');
+previewButton.addEventListener('click', async () => {
   const center = map.getCenter().toArray();
   const zoom = map.getZoom();
 
-  printButton.disabled = true;
+  previewButton.disabled = true;
   await plotMap({
     width: 400,
     height: 400,
@@ -38,5 +38,5 @@ printButton.addEventListener('click', async () => {
     zoom: zoom + 9,
     label: labelText
   });
-  printButton.disabled = false;
+  previewButton.disabled = false;
 });
