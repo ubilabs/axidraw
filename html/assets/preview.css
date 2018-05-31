@@ -13,6 +13,15 @@ svg path {
   fill: none;
 }
 
+svg path.pending {
+  stroke: #99F;
+}
+
+svg path.current {
+  stroke: #C00;
+  stroke-width: 2px;
+}
+
 .progress-bar {
   width: 400px;
   height: 9px;

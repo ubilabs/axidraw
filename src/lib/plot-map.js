@@ -31,7 +31,6 @@ const CIRCLE_OFFSET = {
 let plotter = null;
 
 export default async function plotLines(options) {
-
   const coords = [];
 
   const project = getProjection(options);

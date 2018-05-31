@@ -8,8 +8,9 @@ const TOLERANCE = 0.5;
  * Converts an array of screen coordinates into SVG paths.
  *
  * @param {Array} lines List of screen coordinates.
+ * @param {Object} options.renderAs output type: "text" (default), "nodes"
  */
-export function renderSVGPaths(lines) {
+export function renderSVGPaths(lines, options = {renderAs: 'text'}) {
   return lines.map(line => {
     const path = line.map((p, index) => {
       const x = p[0].toFixed(PRECISION);
@@ -18,7 +19,21 @@ export function renderSVGPaths(lines) {
       return `${index == 0 ? 'M' : 'L'} ${x},${y}`;
     });
 
-    return `<path d="${path.join(' ')}"/>`;
+
+    if (options.renderAs == 'text') {
+      // return path as text
+      return `<path d="${path.join(' ')}"/>`;
+    } else if (options.renderAs == 'nodes') {
+      // return path as DOM node
+      const element = document.createElementNS(
+        'http://www.w3.org/2000/svg', 'path'
+      );
+      element.setAttribute('d', path.join(' '));
+      return element;
+    } else {
+      // return list of instructions
+      return path;
+    }
   });
 }
 
