@@ -20,6 +20,8 @@ export default class Plotter {
   set coords(coords) {
     this._coords = coords;
 
+    this.svgContainer.innerHTML = '';
+
     this.svgPaths = renderSVGPaths(coords, {renderAs: 'nodes'});
     this.svgPaths.forEach(path => {
       this.svgContainer.appendChild(path);

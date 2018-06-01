@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>JSConf logo</title>
+
+  <link href="/assets/preview.css" rel="stylesheet">
+  <style>
+    *,
+    *:after,
+    *:before {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #preview,
+    .container {
+      width: 496px;
+      height: 700px;
+      box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center
+    }
+
+
+    #action-buttons {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      padding: 10px;
+    }
+
+    #action-buttons button {
+      padding: 4px 8px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <svg id="preview" viewBox="0,0,496,700"></svg>
+
+  <div id="action-buttons">
+    <button class="print-button">Print</button>
+  </div>
+
+</body>
+</html>

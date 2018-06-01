@@ -9,7 +9,9 @@ const entries = [
   'preview-terrain',
   'adjust-pen',
   'svg-font-test',
-  'jsconf-logo'
+  'jsconf-logo',
+  'draw-bounds',
+  'draw-lorenz'
 ];
 
 module.exports = {
