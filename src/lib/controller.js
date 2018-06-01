@@ -3,6 +3,7 @@ import keyboardMappings from '../constants/keyboard-mapping.js';
 export default class Controller {
   constructor(map) {
     this.map = map;
+    this.step = 100;
 
     const joystickIsConnected = false;
 
@@ -31,27 +32,27 @@ export default class Controller {
   }
 
   navigateLeft() {
-    console.log('navigate left');
+    this.map.panBy([-this.step, 0]);
   }
 
   navigateRight() {
-    console.log('navigate right');
+    this.map.panBy([this.step, 0]);
   }
 
   navigateUp() {
-    console.log('navigate up');
+    this.map.panBy([0, -this.step]);
   }
 
   navigateDown() {
-    console.log('navigate down');
+    this.map.panBy([0, this.step]);
   }
 
   zoomIn() {
-    console.log('zoom in');
+    this.map.zoomIn();
   }
 
   zoomOut() {
-    console.log('zoom out');
+    this.map.zoomOut();
   }
 
   preview() {
