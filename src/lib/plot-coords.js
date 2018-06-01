@@ -13,14 +13,18 @@ export default class Plotter {
     this.svgContainer = document.getElementById('preview');
     this.progressBar = new ProgressBar(document.body);
     this.coords = coords;
+
+    this.shouldAbortPrinting = false;
   }
 
   set coords(coords) {
     this._coords = coords;
 
+    this.svgContainer.innerHTML = '';
+
     this.svgPaths = renderSVGPaths(coords, {renderAs: 'nodes'});
     this.svgPaths.forEach(path => {
-      this.svgContainer.appendChild(path)
+      this.svgContainer.appendChild(path);
     });
   }
 
@@ -39,8 +43,13 @@ export default class Plotter {
     });
   }
 
+  abort() {
+    const response = window.confirm('This will abort the printing!');
+    this.shouldAbortPrinting = response;
+  }
+
   async print() {
-    if (!this.axidraw){
+    if (!this.axidraw) {
       this.axidraw = await createAxidraw();
     }
 
@@ -49,6 +58,10 @@ export default class Plotter {
     });
 
     for (let i = 0; i < this._coords.length; i++) {
+      if (this.shouldAbortPrinting) {
+        i = this._coords.length;
+      }
+
       const line = this._coords[i];
       const path = this.svgPaths[i];
 

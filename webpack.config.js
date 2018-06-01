@@ -8,7 +8,10 @@ const entries = [
   'preview',
   'preview-terrain',
   'adjust-pen',
-  'svg-font-test'
+  'svg-font-test',
+  'jsconf-logo',
+  'draw-bounds',
+  'draw-lorenz'
 ];
 
 module.exports = {
