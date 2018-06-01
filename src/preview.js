@@ -1,5 +1,5 @@
 import plotMap from './lib/plot-map';
-import Controller from './lib/controller';
+import CustomControls from './lib/custom-controls';
 
 mapboxgl.accessToken =
   'pk.eyJ1IjoidWJpbGFicyIsImEiOiJ4Tm02bDJrIn0.aA51umnsZbzugtBiFLZPoQ';
@@ -11,7 +11,7 @@ const map = new mapboxgl.Map({
   zoom: 11
 });
 
-new Controller(map);
+new CustomControls(map);
 
 map.dragRotate.disable();
 
