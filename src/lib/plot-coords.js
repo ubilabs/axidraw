@@ -13,6 +13,8 @@ export default class Plotter {
     this.svgContainer = document.getElementById('preview');
     this.progressBar = new ProgressBar(document.body);
     this.coords = coords;
+
+    this.shouldAbortPrinting = false;
   }
 
   set coords(coords) {
@@ -20,12 +22,17 @@ export default class Plotter {
 
     this.svgPaths = renderSVGPaths(coords, {renderAs: 'nodes'});
     this.svgPaths.forEach(path => {
-      this.svgContainer.appendChild(path)
+      this.svgContainer.appendChild(path);
     });
   }
 
+  abort() {
+    const response = window.confirm('This will abort the printing!');
+    this.shouldAbortPrinting = response;
+  }
+
   async print() {
-    if (!this.axidraw){
+    if (!this.axidraw) {
       this.axidraw = await createAxidraw();
     }
 
@@ -34,6 +41,11 @@ export default class Plotter {
     });
 
     for (let i = 0; i < this._coords.length; i++) {
+      if (this.shouldAbortPrinting) {
+        i = this._coords.length;
+        return;
+      }
+
       const line = this._coords[i];
       const path = this.svgPaths[i];
 

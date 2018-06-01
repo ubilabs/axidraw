@@ -6,7 +6,7 @@ import simplifyLines from './simplify-lines';
 import cropLines from './crop-lines-by-circle';
 import getCircle from './get-circle';
 import {move, scale, scaleAndMove} from './scale-move';
-import {logoCoords} from '../assets/ubilabs-logo'
+import {logoCoords} from '../assets/ubilabs-logo';
 import convertTextToCoords from './convert-text-to-coords';
 import Plotter from './plot-coords';
 
@@ -35,11 +35,11 @@ export default async function plotLines(options) {
 
   const project = getProjection(options);
   const circle = {
-    center: [options.width / 2, options.height /  2],
+    center: [options.width / 2, options.height / 2],
     radius: options.height / 2 - 4
   };
 
-  const scaledLogo = scaleAndMove(logoCoords, {scale: 0.25, x: 200, y: 640})
+  const scaledLogo = scaleAndMove(logoCoords, {scale: 0.25, x: 200, y: 640});
 
   const text = options.label || 'UBILABS';
   const textCoords = await convertTextToCoords(text, {
@@ -62,11 +62,7 @@ export default async function plotLines(options) {
     plotter = new Plotter();
   }
 
-  plotter.coords = [
-    ...textCoords,
-    ...scaledLogo,
-    ...movedCircles
-  ];
+  plotter.coords = [...textCoords, ...scaledLogo, ...movedCircles];
 
   const mapPaths = await loadLines(options);
   const projectedPaths = mapPaths.map(line => line.map(project));
@@ -75,7 +71,7 @@ export default async function plotLines(options) {
   const mergedMapPaths = mergeLines(sortedMapPaths);
   const simplifiedPaths = simplifyLines(mergedMapPaths);
 
-  const centeredMap = move(simplifiedPaths, CIRCLE_OFFSET)
+  const centeredMap = move(simplifiedPaths, CIRCLE_OFFSET);
 
   coords.push(
     ...movedCircles,
@@ -103,12 +99,21 @@ export default async function plotLines(options) {
 
   plotter.coords = coords;
 
+  const previewButton = document.querySelector('.preview-button');
   const printButton = document.querySelector('.print-button');
+  const printButtonCancel = document.querySelector('.print-button-cancel');
+
   printButton.disabled = false;
 
-  printButton.onclick = function(){
+  printButton.onclick = function() {
     plotter.print();
+
     printButton.disabled = true;
-    document.querySelector('.preview-button').disabled = true;
+    previewButton.disabled = true;
+
+    printButton.style.display = 'none';
+    printButtonCancel.style.display = 'inline';
+
+    printButtonCancel.addEventListener('click', () => plotter.abort());
   };
 }
