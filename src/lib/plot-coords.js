@@ -24,6 +24,21 @@ export default class Plotter {
     });
   }
 
+  setAnimatedCoords(coords) {
+    this._coords = coords;
+    this.svgPaths = renderSVGPaths(coords, {renderAs: 'nodes'});
+    this.svgPaths.forEach((path, index) => {
+      const oldPath = this.svgContainer.querySelector(`path:nth-child(${index + 1})`);
+
+      if (!oldPath) {
+        this.svgContainer.appendChild(path);
+        return;
+      }
+
+      oldPath.setAttribute('d', path.getAttribute('d'));
+    });
+  }
+
   async print() {
     if (!this.axidraw){
       this.axidraw = await createAxidraw();
