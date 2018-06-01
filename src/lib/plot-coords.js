@@ -43,7 +43,6 @@ export default class Plotter {
     for (let i = 0; i < this._coords.length; i++) {
       if (this.shouldAbortPrinting) {
         i = this._coords.length;
-        return;
       }
 
       const line = this._coords[i];
