@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Axidraw Terrain Plotter</title>
+  <link href="/assets/preview.css" rel="stylesheet">
+
+  <style>
+    *,
+    *:after,
+    *:before {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 496px;
+      height: 700px;
+      box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center
+    }
+
+    .sliders {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+    }
+
+    .print-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+    }
+
+    svg path {
+      stroke: black;
+      vector-effect: non-scaling-stroke;
+      fill: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sliders">
+    <!-- <input type="radio" id="js-conf-logo"
+     name="contact" value="email">
+    <label for="contactChoice1">Email</label>
+
+    <input type="radio" id="contactChoice2"
+     name="contact" value="phone">
+    <label for="contactChoice2">Phone</label> -->
+    <input type="range" min="0" max="10" value="1" step="0.1" id="roughness" data-type="roughness"> Roughness
+    <br>
+    <input type="range" min="1" max="100" value="4" step="1" id="hachure-gap" data-type="hachureGap"> Hachure Gap
+  </div>
+
+  <svg id="logo" width="450px" height="450px" viewBox="0,0,450,450"></svg>
+
+  <div class="container">
+    <svg id="preview" width="496px" height="700px" viewBox="0,0,496,700"></svg>
+  </div>
+
+  <button class="print-button">Print</button>
+</body>
+
+</html>

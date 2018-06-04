@@ -7,6 +7,7 @@ const entries = [
   'debugger',
   'preview',
   'preview-terrain',
+  'preview-logo',
   'adjust-pen',
   'svg-font-test'
 ];
