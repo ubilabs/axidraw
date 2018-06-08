@@ -4,12 +4,12 @@ import Plotter from './lib/plot-coords';
 import max from 'lodash.max';
 import min from 'lodash.min';
 import {move, scaleAndMove} from './lib/scale-move';
-import {logoCoords} from './assets/ubilabs-logo';
 import convertTextToCoords from './lib/convert-text-to-coords';
+import renderClaim from './assets/logo-and-claim';
 
 const TILE_SIZE = 800;
-const LINES = 40;
-const CAMERA_DISTANCE_FACTOR = 0.6;
+const LINES = 80;
+const CAMERA_DISTANCE_FACTOR = 1.2;
 const OFFSET = {x: -80, y: -120};
 const mapOptions = {
   center: [10.373396564972154, 46.40377181364744],
@@ -18,8 +18,10 @@ const mapOptions = {
 };
 
 const coolPlaces = [
-  {lng: 10, lat: 40, zoom: 10, name: 'Test1'},
-  {lng: 20, lat: 50, zoom: 5, name: 'Test2'}
+  {lng: 138.69807244232152, lat: 35.375674249019596, zoom: 8.9352830349, name: 'Fuji'},
+  {lng: -119.59399848933947, lat: 37.74373097805693, zoom: 10.731, name: 'Yosemite'},
+  {lng: 85.3496795000001, lat: 27.695248815918546, zoom: 9.758685515456182, name: 'Kathmandu'},
+  {lng: -111.812412501538, lat: 36.549924781123366, zoom: 11.551900766192652, name: 'Grand Canyon'}
 ];
 renderCoolPlaces(coolPlaces);
 
@@ -44,6 +46,12 @@ const map = new mapboxgl.Map(Object.assign({
     }]
   }
 }, mapOptions));
+
+map.addControl(
+  new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken
+  })
+);
 
 const mapTerrain = new mapboxgl.Map(Object.assign({
   container: 'mapTerrain',
@@ -86,7 +94,9 @@ async function init() {
   camera.update();
   
   const plotter = new Plotter();
-  document.querySelector('.print-button').onclick = plotter.print;
+  document.querySelector('.print-button').onclick = function(){
+    plotter.print();
+  }
 
   let timer = 0;
   const update = () => {
@@ -115,7 +125,6 @@ async function init() {
 map.on('load', init);
 
 async function getFinalCoords(lines, text) {
-  const scaledLogo = scaleAndMove(logoCoords, {scale: 0.25, x: 200, y: 640});
   const label = text || 'UBILABS';
   const textCoords = await convertTextToCoords(label, {
     x: 496 / 2,
@@ -124,10 +133,12 @@ async function getFinalCoords(lines, text) {
     anchor: 'center middle'
   });
 
+  const claim = await renderClaim();  
+
   return [
     ...lines,
     ...textCoords,
-    ...scaledLogo
+    ...claim
   ];
 }
 
