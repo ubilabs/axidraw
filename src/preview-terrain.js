@@ -86,7 +86,9 @@ async function init() {
   camera.update();
   
   const plotter = new Plotter();
-  document.querySelector('.print-button').onclick = plotter.print;
+  document.querySelector('.print-button').onclick = function(){
+    plotter.print();
+  }
 
   let timer = 0;
   const update = () => {
