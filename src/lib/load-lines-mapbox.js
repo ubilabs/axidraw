@@ -6,8 +6,6 @@ import Protobuf from 'pbf';
 
 const API_KEY = 'fApLQBTwQbaIclmV0CoOQA';
 const TILE_BASE_URL = 'https://tile.nextzen.org/tilezen/vector/v1/256/all/';
-const EXCLUDE_ROAD_TYPES = ['ferry', 'path', 'minor_road', 'rail'];
-
 const INCLUDED = ['road', 'water'];
 
 /**
@@ -38,6 +36,13 @@ async function loadTiles(viewport) {
       for (let i = 0; i < layer.length; i++) {
         const feature = layer.feature(i);
         const geojson = feature.toGeoJSON(visibleTile.x, visibleTile.y, visibleTile.z);
+
+        // flatten multi polygon strings
+        if (geojson.geometry.type === 'MultiPolygon') {
+          geojson.geometry.coordinates = geojson.geometry.coordinates
+            .reduce((all, item) => all.concat(item), []);
+        }
+
         geojsons.push(geojson);
       }
     }

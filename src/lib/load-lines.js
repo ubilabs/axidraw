@@ -44,6 +44,12 @@ function getLines(features) {
   for (const feature of features) {
     if (feature.geometry.type === 'Point') continue;
 
+    // flatten multi polygon strings
+    if (feature.geometry.type === 'MultiPolygon') {
+      feature.geometry.coordinates = feature.geometry.coordinates
+        .reduce((all, item) => all.concat(item), []);
+    }
+
     flattened.push(...flatten(feature));
   }
 
