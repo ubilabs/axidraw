@@ -9,6 +9,7 @@ import {move, scale, scaleAndMove} from './scale-move';
 import {logoCoords} from '../assets/ubilabs-logo';
 import convertTextToCoords from './convert-text-to-coords';
 import Plotter from './plot-coords';
+import renderClaim from '../assets/logo-and-claim';
 
 const PAPER_SIZE = {
   width: 496,
@@ -25,7 +26,7 @@ const paperBounds = [
 
 const CIRCLE_OFFSET = {
   x: 100 / 2,
-  y: 30
+  y: 50
 };
 
 let plotter = null;
@@ -39,12 +40,12 @@ export default async function plotLines(options) {
     radius: options.height / 2 - 4
   };
 
-  const scaledLogo = scaleAndMove(logoCoords, {scale: 0.25, x: 200, y: 640});
+  const claim = await renderClaim();
 
   const text = options.label || 'UBILABS';
   const textCoords = await convertTextToCoords(text, {
     x: PAPER_SIZE.width / 2,
-    y: 500,
+    y: 530,
     fontSize: 40,
     anchor: 'center middle'
   });
@@ -62,7 +63,7 @@ export default async function plotLines(options) {
     plotter = new Plotter();
   }
 
-  plotter.coords = [...textCoords, ...scaledLogo, ...movedCircles];
+  plotter.coords = [...textCoords, ...claim, ...movedCircles];
 
   const mapPaths = await loadLines(options);
   const projectedPaths = mapPaths.map(line => line.map(project));
@@ -77,8 +78,7 @@ export default async function plotLines(options) {
     ...movedCircles,
     ...textCoords,
     ...centeredMap,
-    ...scaledLogo,
-    paperBounds
+    ...claim
   );
 
   const stats = [];

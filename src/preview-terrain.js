@@ -4,12 +4,12 @@ import Plotter from './lib/plot-coords';
 import max from 'lodash.max';
 import min from 'lodash.min';
 import {move, scaleAndMove} from './lib/scale-move';
-import {logoCoords} from './assets/ubilabs-logo';
 import convertTextToCoords from './lib/convert-text-to-coords';
+import renderClaim from './assets/logo-and-claim';
 
 const TILE_SIZE = 800;
-const LINES = 40;
-const CAMERA_DISTANCE_FACTOR = 0.6;
+const LINES = 80;
+const CAMERA_DISTANCE_FACTOR = 1.2;
 const OFFSET = {x: -80, y: -120};
 const mapOptions = {
   center: [10.373396564972154, 46.40377181364744],
@@ -115,7 +115,6 @@ async function init() {
 map.on('load', init);
 
 async function getFinalCoords(lines, text) {
-  const scaledLogo = scaleAndMove(logoCoords, {scale: 0.25, x: 200, y: 640});
   const label = text || 'UBILABS';
   const textCoords = await convertTextToCoords(label, {
     x: 496 / 2,
@@ -124,10 +123,12 @@ async function getFinalCoords(lines, text) {
     anchor: 'center middle'
   });
 
+  const claim = await renderClaim();  
+
   return [
     ...lines,
     ...textCoords,
-    ...scaledLogo
+    ...claim
   ];
 }
 
