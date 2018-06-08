@@ -11,7 +11,8 @@ const entries = [
   'svg-font-test',
   'jsconf-logo',
   'draw-bounds',
-  'draw-lorenz'
+  'draw-lorenz',
+  'draw-label-only'
 ];
 
 module.exports = {
