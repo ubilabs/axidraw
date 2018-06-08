@@ -18,8 +18,10 @@ const mapOptions = {
 };
 
 const coolPlaces = [
-  {lng: 10, lat: 40, zoom: 10, name: 'Test1'},
-  {lng: 20, lat: 50, zoom: 5, name: 'Test2'}
+  {lng: 138.69807244232152, lat: 35.375674249019596, zoom: 8.9352830349, name: 'Fuji'},
+  {lng: -119.59399848933947, lat: 37.74373097805693, zoom: 10.731, name: 'Yosemite'},
+  {lng: 85.3496795000001, lat: 27.695248815918546, zoom: 9.758685515456182, name: 'Kathmandu'},
+  {lng: -111.812412501538, lat: 36.549924781123366, zoom: 11.551900766192652, name: 'Grand Canyon'}
 ];
 renderCoolPlaces(coolPlaces);
 
