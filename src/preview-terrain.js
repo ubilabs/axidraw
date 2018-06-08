@@ -45,6 +45,12 @@ const map = new mapboxgl.Map(Object.assign({
   }
 }, mapOptions));
 
+map.addControl(
+  new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken
+  })
+);
+
 const mapTerrain = new mapboxgl.Map(Object.assign({
   container: 'mapTerrain',
   style: {
