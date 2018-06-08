@@ -7,7 +7,7 @@ import {move, scaleAndMove} from './lib/scale-move';
 import convertTextToCoords from './lib/convert-text-to-coords';
 import renderClaim from './assets/logo-and-claim';
 
-const TILE_SIZE = 800;
+const TILE_SIZE = 400 * window.devicePixelRatio;
 const LINES = 80;
 const CAMERA_DISTANCE_FACTOR = 1.2;
 const OFFSET = {x: -80, y: -120};
