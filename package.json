@@ -1,7 +1,7 @@
 {
   "name": "axidraw",
   "version": "1.0.0",
-  "description": "Axidraw experiments",
+  "description": "AxiDrawJS allows you to use JavaScript to draw on any flat surface.",
   "dependencies": {
     "line2": "^0.2.1",
     "lodash.max": "^4.0.1",
@@ -32,10 +32,7 @@
   },
   "scripts": {
     "start": "npm-run-all -p webpack-server cncserver",
-    "start-dev": "npm-run-all -p webpack-server cncserver-simulator",
     "webpack-server": "webpack-dev-server --mode development",
-    "cncserver-simulator": "node ./node_modules/cncserver --botType=axidraw",
-    "postcncserver-simulator": "npm run clean-up",
     "cncserver": "node ./node_modules/cncserver --botType=axidraw --serialPath=$(node get-port.js)",
     "postcncserver": "npm run clean-up",
     "clean-up": "rm /tmp/app.cncserver"
