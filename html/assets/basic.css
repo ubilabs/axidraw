@@ -1,0 +1,78 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Raleway', sans-serif;
+  font-size: 20px;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+button {
+  font-size: inherit;
+  background: transparent;
+  border: 2px solid currentColor;
+  padding: .5em 1em;
+  cursor: pointer;
+}
+
+a:not(:disabled):hover,
+a:not(:disabled):focus,
+button:not(:disabled):hover,
+button:not(:disabled):focus {
+  color: #00F;
+}
+
+header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 40px;
+  height: 175px;
+}
+
+h1 {
+  font-family: 'Coming Soon', cursive;
+  font-size: 60px;
+  margin: 0;
+  margin-right: 10px;
+}
+
+#ubilabs-logo {
+  width: 7em;
+  margin-left: 10px;
+}
+
+#map-lines {
+  max-width: 800px;
+  width: 60vw;
+  position: absolute;
+  left: 0;
+  top: 10em;
+}
+
+main {
+  height: calc(100vh - 175px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2em 4em;
+}
+
+#action-buttons {
+  position: fixed;
+  top: 60px;
+  right: 50px;
+}

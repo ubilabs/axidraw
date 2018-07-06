@@ -1,23 +1,46 @@
-<style>
+<!DOCTYPE html>
+<html lang="en">
 
-  body {
-    margin: 10em;
-    text-align: center;
-  }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>AxiDrawJS — Adjust Pen</title>
 
-  body, button {
-    font-size: 20px;
-  }
+  <link href="https://fonts.googleapis.com/css?family=Coming+Soon|Raleway:100,400" rel="stylesheet">
+  <link href="/assets/basic.css" rel="stylesheet">
 
-</style>
+  <style>
+    main {
+      justify-content: flex-start;
+      flex-direction: column;
+    }
 
+    #info {
+      margin-top: 7vh;
+      text-align: center;
+      min-height: 7em;
+    }
+  </style>
+</head>
 <body>
-  <h1>Adjust AxiDraw Pen</h1>
+  <header>
+    <h1>
+      <a href="/" title="AxiDrawJS">AxiDrawJS</a>
+    </h1>
+    made by
+    <a href="https://ubilabs.net" title="Ubilabs" target="_blank">
+      <img src="assets/ubilabs.svg" alt="" id="ubilabs-logo" />
+    </a>
+  </header>
 
-  <p id="info">
-    Loading …
-  </p>
+  <main>
+    <p id="info">
+      Loading …
+    </p>
 
-  <button id="button" disabled>Next</button>
+    <button type="button" id="button" disabled>Next →</button>
+  </main>
 
 </body>
+</html>
