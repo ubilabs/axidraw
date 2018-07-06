@@ -1,4 +1,5 @@
 import plotMap from './lib/plot-map';
+import CustomControls from './lib/custom-controls';
 
 mapboxgl.accessToken =
   'pk.eyJ1IjoidWJpbGFicyIsImEiOiJ4Tm02bDJrIn0.aA51umnsZbzugtBiFLZPoQ';
@@ -10,6 +11,8 @@ const map = new mapboxgl.Map({
   zoom: 11
 });
 
+new CustomControls(map);
+
 map.dragRotate.disable();
 
 map.addControl(
@@ -19,7 +22,7 @@ map.addControl(
 );
 
 const label = document.getElementById('label');
-let labelText = "HAMBURG";
+let labelText = 'HAMBURG';
 
 label.addEventListener('input', event => {
   labelText = label.innerText.toUpperCase();
