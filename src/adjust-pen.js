@@ -32,7 +32,7 @@ async function adjustPen() {
 async function parkPen() {
   info.innerHTML = `Setting pen state up…`;
   await axidraw.setPenState('state=up');
-  info.innerHTML = `Done. You are now ready to draw!<br /><br />You should now <a href="/draw-bounds.html" title="Draw the bounds">draw the bounds</a>.`;
+  info.innerHTML = `Done. You are now ready to draw!<br /><br /><img src="assets/dancing-robot.gif" alt=""/><br /><br />You should now <a href="/draw-bounds.html" title="Draw the bounds">draw the bounds</a>.`;
   button.onclick = goToDrawBounds;
   button.innerHTML = 'Draw the bounds →'
 }
