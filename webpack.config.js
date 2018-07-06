@@ -1,17 +1,12 @@
 const HtmlPlugin = require('html-webpack-plugin');
 
 const entries = [
-  'api-test',
-  'draw-waves',
-  'd3-svg-map',
-  'debugger',
-  'preview',
-  'preview-terrain',
   'adjust-pen',
-  'svg-font-test',
-  'jsconf-logo',
   'draw-bounds',
+  'draw-map',
+  'draw-terrain',
   'draw-lorenz',
+  'draw-jsconf-logo',
   'draw-label-only'
 ];
 
