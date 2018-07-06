@@ -6,6 +6,8 @@ AxiDrawJS allows you to use JavaScript to draw on any flat surface with an [AxiD
 
 > The AxiDraw V3 is a simple, modern, and precise pen plotter, capable of writing or drawing on almost any flat surface. It can write with fountain pens, permanent markers, and a variety of other writing implements to handle an endless number of applications.
 
+![](images/drawing.gif)
+
 ## Development
 
 Note: This project was build and tested on OSX. Use with care on other platforms.
@@ -45,3 +47,7 @@ If the AxiDraw is not connected, the server starts in simulator mode. To visit t
 1. For drawing the reference borders go to http://localhost:8080/draw-bounds.html and press `Print` to draw the bounds of the cards. Note: we’re using cards with the size DIN A6.
 1. Place a card on the reference borders and you’re ready to go!
 1. On http://localhost:4242 you can see the CNC management board with the progress and further options.
+
+![](images/overview.jpg)
+![](images/detail.jpg)
+![](images/examples.jpg)
