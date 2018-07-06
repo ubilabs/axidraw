@@ -5,33 +5,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>AxiDraw Terrain Plotter</title>
-  <link href="/assets/preview.css" rel="stylesheet">
+  <title>AxiDrawJS — Draw Terrain</title>
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.css' rel='stylesheet' />
   <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
   <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css'
     type='text/css' />
+
+  <link href="https://fonts.googleapis.com/css?family=Coming+Soon|Raleway:100,400" rel="stylesheet">
+  <link href="/assets/basic.css" rel="stylesheet">
+  <link href="/assets/preview.css" rel="stylesheet">
   <style>
-    *,
-    *:after,
-    *:before {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
     .container {
       width: 496px;
       height: 700px;
@@ -39,18 +23,6 @@
       display: flex;
       flex-direction: column;
       align-items: center
-    }
-
-    .print-button {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-    }
-
-    .preview-button {
-      position: fixed;
-      top: 50px;
-      right: 20px;
     }
 
     svg path {
@@ -95,23 +67,37 @@
 </head>
 
 <body>
-  <div>
-    <div id="map"></div>
-    <label>Text: <input type="text" id="label" value="#jsconfeu" /></label>
-    <br />
-    <label>Height Factor: <input type="range" id="heightfactor" value="1" min="0" max="2" step="0.1"/></label>
+  <header>
+    <h1>
+      <a href="/" title="AxiDrawJS">AxiDrawJS</a>
+    </h1>
+    made by
+    <a href="https://ubilabs.net" title="Ubilabs" target="_blank">
+      <img src="assets/ubilabs.svg" alt="" id="ubilabs-logo" />
+    </a>
+  </header>
+
+  <div id="action-buttons">
+    <button class="preview-button">Preview</button>
+    <button class="print-button">Print</button>
   </div>
 
-  <div class="container">
-    <svg id="preview" width="496px" height="700px" viewBox="0,0,496,700"></svg>
-  </div>
+  <main>
+    <div>
+      <div id="map"></div>
+      <label>Text: <input type="text" id="label" value="#jsconfeu" /></label>
+      <br />
+      <label>Height Factor: <input type="range" id="heightfactor" value="1" min="0" max="2" step="0.1"/></label>
+    </div>
 
-  <div id="mapTerrain"></div>
+    <div class="container">
+      <svg id="preview" width="496px" height="700px" viewBox="0,0,496,700"></svg>
+    </div>
 
-  <button class="preview-button">Preview</button>
-  <button class="print-button">Print</button>
+    <div id="mapTerrain"></div>
 
-  <div id="coolplaces"></div>
+    <div id="coolplaces"></div>
+  </main>
 </body>
 
 </html>

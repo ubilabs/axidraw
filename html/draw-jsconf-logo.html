@@ -5,31 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>JSConf logo</title>
+  <title>AxiDrawJS — Draw JSConf logo</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Raleway:100" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css?family=Coming+Soon|Raleway:100,400" rel="stylesheet">
+  <link href="/assets/basic.css" rel="stylesheet">
   <link href="/assets/preview.css" rel="stylesheet">
   <style>
-    *,
-    *:after,
-    *:before {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
     #preview,
     .container {
       width: 496px;
@@ -49,19 +30,9 @@
       stroke: none;
     }
 
-    #action-buttons {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      padding: 10px;
-    }
-
-    #action-buttons button {
-      padding: 4px 8px;
-    }
-
     #label {
       font-family: 'Raleway', sans-serif;
+      font-size: 100;
       display: block;
       font-size: 38px;
       margin-top: 60px;
@@ -80,31 +51,41 @@
 </head>
 
 <body>
-  <div class="container">
-    <svg id="jsconf"  version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-   viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
-  <style type="text/css">
-    .st0{fill:#E10079;}
-    .st1{fill:#FFFFFF;}
-  </style>
-<title>Heart Logo</title>
-<g>
-  <path class="st0" d="M2.4,40h35.2c1.3,0,2.4-1.1,2.4-2.4V2.4C40,1.1,38.9,0,37.6,0H2.4C1.1,0,0,1.1,0,2.4v35.2
-  C0,38.9,1.1,40,2.4,40"/>
-  <path class="st1" d="M18.1,21c2-2,5.1-1.9,7.1,0c2-2,5.1-2,7.1,0c2,2,2,5-0.1,7.2l-6.9,6.9c-0.7-0.7-4.5-4.5-6.9-6.9
-  C16.1,26.1,16.1,23,18.1,21"/>
-</g>
-</svg>
-
-      <div id="label" contentEditable>@JSCONFEU</div>
-    </div>
-  </div>
-  <svg id="preview" viewBox="0,0,496,700"></svg>
+  <header>
+    <h1>
+      <a href="/" title="AxiDrawJS">AxiDrawJS</a>
+    </h1>
+    made by
+    <a href="https://ubilabs.net" title="Ubilabs" target="_blank">
+      <img src="assets/ubilabs.svg" alt="" id="ubilabs-logo" />
+    </a>
+  </header>
 
   <div id="action-buttons">
     <button class="print-button">Print</button>
   </div>
 
-</body>
+  <main>
+    <div class="container">
+      <svg id="jsconf"  version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+    viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+    <style type="text/css">
+      .st0{fill:#E10079;}
+      .st1{fill:#FFFFFF;}
+    </style>
+  <title>Heart Logo</title>
+  <g>
+    <path class="st0" d="M2.4,40h35.2c1.3,0,2.4-1.1,2.4-2.4V2.4C40,1.1,38.9,0,37.6,0H2.4C1.1,0,0,1.1,0,2.4v35.2
+    C0,38.9,1.1,40,2.4,40"/>
+    <path class="st1" d="M18.1,21c2-2,5.1-1.9,7.1,0c2-2,5.1-2,7.1,0c2,2,2,5-0.1,7.2l-6.9,6.9c-0.7-0.7-4.5-4.5-6.9-6.9
+    C16.1,26.1,16.1,23,18.1,21"/>
+  </g>
+  </svg>
 
+        <div id="label" contentEditable>@JSCONFEU</div>
+      </div>
+    </div>
+    <svg id="preview" viewBox="0,0,496,700"></svg>
+  </main>
+</body>
 </html>
