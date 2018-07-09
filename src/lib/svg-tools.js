@@ -2,7 +2,7 @@ import segments from 'svg-line-segments';
 import linearize from 'svg-linearize';
 
 const PRECISION = 3;
-const TOLERANCE = 0.5;
+const TOLERANCE = 0.1;
 
 /**
  * Converts an array of screen coordinates into SVG paths.
@@ -19,14 +19,14 @@ export function renderSVGPaths(lines, options = {renderAs: 'text'}) {
       return `${index == 0 ? 'M' : 'L'} ${x},${y}`;
     });
 
-
     if (options.renderAs == 'text') {
       // return path as text
       return `<path d="${path.join(' ')}"/>`;
     } else if (options.renderAs == 'nodes') {
       // return path as DOM node
       const element = document.createElementNS(
-        'http://www.w3.org/2000/svg', 'path'
+        'http://www.w3.org/2000/svg',
+        'path'
       );
       element.setAttribute('d', path.join(' '));
       return element;
