@@ -53,7 +53,7 @@ If the AxiDraw is not connected, the server starts in simulator mode. To visit t
 
 To create your own drawings you should start with the high level `Plotter` class from [/src/lib/plot-coords.js]. 
 
-See [/src/draw-lorenz.js] and [/html/draw-lorenz.html](https://github.com/ubilabs/axidraw/blob/master/html/draw-lorenz.html) for a basic example. _Note:_ This will require some basic HTML tags (such as a preview SVG) and styles. The final paper size is 496x700 pixel and is equal to the DIN A6 paper format. 
+See [/src/draw-lorenz.js] and [/html/draw-lorenz.html] for a basic example. _Note:_ This requires some bolierplate HTML tags (such as a `#preview` SVG) and styles. The final paper size is 496x700 pixel and equal to the DIN A6 paper format. 
 
 Basic JavaScript outline:
 
@@ -64,7 +64,7 @@ plotter.coords = [...]; // assign the coords
 plotter.print(); // start drawing
 ```
 
-If you like to build your own, better use the low level API from [/src/lib/axidraw.js]:
+If you like to have more control over the robot use the low level API from [/src/lib/axidraw.js]:
 
 ```js
 const axidraw = await createAxidraw();
