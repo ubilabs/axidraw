@@ -48,6 +48,39 @@ If the AxiDraw is not connected, the server starts in simulator mode. To visit t
 1. Place a card on the reference borders and you’re ready to go!
 1. On http://localhost:4242 you can see the CNC management board with the progress and further options.
 
+
+### Brew Your Own
+
+To create your own drawings you should start with the high level `Plotter` class from [/src/lib/plot-coords.js]. 
+
+See [/src/draw-lorenz.js] and [/html/draw-lorenz.html] for a basic example. _Note:_ This requires some bolierplate HTML tags (such as a `#preview` SVG) and styles. The final paper size is 496x700 pixel and equal to the DIN A6 paper format. 
+
+Basic JavaScript outline:
+
+```js
+import Plotter from './lib/plot-coords';
+const plotter = new Plotter();
+plotter.coords = [...]; // assign the coords
+plotter.print(); // start drawing
+```
+
+If you like to have more control over the robot use the low level API from [/src/lib/axidraw.js]:
+
+```js
+const axidraw = await createAxidraw();
+const coords = [...]; // a list of lines 
+
+for (let i = 0; i < coords.length; i++) {
+  const line = this._coords[i];
+  await axidraw.drawPath(line);
+}
+```
+
+_Note:_ You'll need to pass coords with `[x, y]` pairs that are in the range between `0` and `100`.
+
+
+### Images
+
 ![](images/overview.jpg)
 ![](images/detail.jpg)
 ![](images/examples.jpg)
