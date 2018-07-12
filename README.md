@@ -6,7 +6,23 @@ AxiDrawJS allows you to use JavaScript to draw on any flat surface with an [AxiD
 
 > The AxiDraw V3 is a simple, modern, and precise pen plotter, capable of writing or drawing on almost any flat surface. It can write with fountain pens, permanent markers, and a variety of other writing implements to handle an endless number of applications.
 
-![](images/drawing.gif)
+![Animated Drawing](images/drawing.gif)
+
+## Examples
+
+This repository includes some basic APIs and the following examples:
+
+* Map - choose a city and draw the streets
+* Terrain - pseudo 3D map for mountains and hills
+* Lorenz - the well known Lorenz attractor
+* JSConf - the logo of our favourite conference
+* Label Only - to draw it using a different color 
+* Bounds - the reference paper size
+* Adjust Pen - guide to calibrate the plotter
+
+## Sample Prints
+
+![](images/examples.jpg)
 
 ## Development
 
@@ -51,9 +67,11 @@ If the AxiDraw is not connected, the server starts in simulator mode. To visit t
 
 ### Brew Your Own
 
-To create your own drawings you should start with the high level `Plotter` class from [/src/lib/plot-coords.js]. 
+#### `plot-coords.js`
 
-See [/src/draw-lorenz.js] and [/html/draw-lorenz.html] for a basic example. _Note:_ This requires some bolierplate HTML tags (such as a `#preview` SVG) and styles. The final paper size is 496x700 pixel and equal to the DIN A6 paper format. 
+To create your own drawings you should start with the high level `Plotter` class from [src/lib/plot-coords.js](/src/lib/plot-coords.js). 
+
+See [src/draw-lorenz.js](/src/draw-lorenz.js) and [html/draw-lorenz.html](/html/draw-lorenz.html) for a basic example. _Note:_ This requires some bolierplate HTML tags (such as a `#preview` SVG) and styles. The final paper size is 496x700 pixel and equal to the DIN A6 paper format. 
 
 Basic JavaScript outline:
 
@@ -64,9 +82,12 @@ plotter.coords = [...]; // assign the coords
 plotter.print(); // start drawing
 ```
 
-If you like to have more control over the robot use the low level API from [/src/lib/axidraw.js]:
+#### `axidraw.js`
+
+If you like to have more control over the robot use the low level API from [src/lib/axidraw.js](/src/lib/axidraw.js):
 
 ```js
+import createAxidraw from "./lib/axidraw";
 const axidraw = await createAxidraw();
 const coords = [...]; // a list of lines 
 
@@ -76,11 +97,73 @@ for (let i = 0; i < coords.length; i++) {
 }
 ```
 
-_Note:_ You'll need to pass coords with `[x, y]` pairs that are in the range between `0` and `100`.
+#### `coords`
+
+You'll need to pass coords with `[x, y]` pairs that are in the range between `0` and `100`. 
+
+Examples:
+
+```js
+const square = [
+  [[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]
+];
+
+const twoSquares = [
+  [[10, 10], [11, 10], [11, 11], [10, 11], [10, 10]],
+  [[20, 20], [21, 20], [21, 21], [20, 21], [20, 10]]
+];
+
+```
+
+#### `load-svg-as-coords.js`
+
+You can also load SVGs and convert the `<path>` elements to coordinates:
+
+```js
+import load from '../lib/load-svg-as-coords.js';
+const coords = await load('/assets/my-logo.svg');
+```
+
+#### `scale-move.js`
 
 
-### Images
+To position and scale elements, use 
+
+```js
+import {scaleAndMove} from '../lib/scale-move';
+const positionedSquare = [
+  ...scaleAndMove(square, {scale: 2, x: 10, y: 10})
+]
+```
+
+#### `convert-text-to-coords.js`
+
+Here is an example how to draw dynamic text:
+
+```js
+import convertTextToCoords from './lib/convert-text-to-coords';
+const text = await convertTextToCoords(text, {
+  x: 100,
+  y: 100,
+  fontSize: 40,
+  anchor: 'center middle'
+});
+
+```
+
+## Images from Setup
 
 ![](images/overview.jpg)
 ![](images/detail.jpg)
-![](images/examples.jpg)
+
+## Background
+
+This project started when we were preparing our sponsor booth at JSConf.eu. Instead of just spreading swag, we wanted something individual that people will love to bring home.  And because we are always surrounded by digital products, an analog print could make a difference. 
+
+At Ubilabs we work with all kind of mapping frameworks such as the Google Maps API or Mapbox.gl. It was an obvious next step that our little friendly robot should draw one of these maps for you.
+
+In the end, we were quite overwhelmed by the positive feedback. The robot was drawing non-stop and we produced more than 100 maps in two days. What we like most, was that it was a kind of ice-breaker when talking to strangers. We always asked them where they live to start the conversation. And while watching the robot drawing their personal map we learned from them and had the chance to explain what Ubilabs is doing.
+
+## Links
+
+Visit [ubilabs.net](https://ubilabs.net/) for more projects like this and follow [@ubilabs](https://twitter.com/ubilabs) on Twitter.
