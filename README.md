@@ -100,3 +100,15 @@ _Note:_ You'll need to pass coords with `[x, y]` pairs that are in the range bet
 
 ![](images/overview.jpg)
 ![](images/detail.jpg)
+
+## Background
+
+This project started when we were preparing our sponsor booth at JSConf.eu. Instead of just spreading swag, we wanted something individual that people will love to bring home.  And because we are always surrounded by digital products, an analog print could make a difference. 
+
+At Ubilabs we work with all kind of mapping frameworks such as the Google Maps API or Mapbox.gl. It was an obvious next step that our little friendly robot should draw one of these maps for you.
+
+In the end, we were quite overwhelmed by the positive feedback. The robot was drawing non-stop and we produced more than 100 maps in two days. What we like most, was that it was a kind of ice-breaker when talking to strangers. We always asked them where they live to start the conversation. And while watching the robot drawing their personal map we learned from them and had the chance to explain what Ubilabs is doing.
+
+## Links
+
+Visit [ubilabs.net](https://ubilabs.net/) for more projects like this and follow [@ubilabs](https://twitter.com/ubilabs) on Twitter.
