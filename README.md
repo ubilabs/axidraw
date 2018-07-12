@@ -131,8 +131,6 @@ To position and scale elements, use
 
 ```js
 import {scaleAndMove} from '../lib/scale-move';
-const square = [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]];
-
 const positionedSquare = [
   ...scaleAndMove(square, {scale: 2, x: 10, y: 10})
 ]
