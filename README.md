@@ -6,7 +6,7 @@ AxiDrawJS allows you to use JavaScript to draw on any flat surface with an [AxiD
 
 > The AxiDraw V3 is a simple, modern, and precise pen plotter, capable of writing or drawing on almost any flat surface. It can write with fountain pens, permanent markers, and a variety of other writing implements to handle an endless number of applications.
 
-![](images/drawing.gif)
+![Animated Drawing](images/drawing.gif)
 
 ## Examples
 
@@ -67,9 +67,9 @@ If the AxiDraw is not connected, the server starts in simulator mode. To visit t
 
 ### Brew Your Own
 
-To create your own drawings you should start with the high level `Plotter` class from [/src/lib/plot-coords.js]. 
+To create your own drawings you should start with the high level `Plotter` class from [src/lib/plot-coords.js](/src/lib/plot-coords.js). 
 
-See [/src/draw-lorenz.js] and [/html/draw-lorenz.html] for a basic example. _Note:_ This requires some bolierplate HTML tags (such as a `#preview` SVG) and styles. The final paper size is 496x700 pixel and equal to the DIN A6 paper format. 
+See [src/draw-lorenz.js](/src/draw-lorenz.js) and [html/draw-lorenz.html](/html/draw-lorenz.html) for a basic example. _Note:_ This requires some bolierplate HTML tags (such as a `#preview` SVG) and styles. The final paper size is 496x700 pixel and equal to the DIN A6 paper format. 
 
 Basic JavaScript outline:
 
@@ -80,7 +80,7 @@ plotter.coords = [...]; // assign the coords
 plotter.print(); // start drawing
 ```
 
-If you like to have more control over the robot use the low level API from [/src/lib/axidraw.js]:
+If you like to have more control over the robot use the low level API from [src/lib/axidraw.js](/src/lib/axidraw.js):
 
 ```js
 import createAxidraw from "./lib/axidraw";
