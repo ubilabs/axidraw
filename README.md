@@ -8,6 +8,22 @@ AxiDrawJS allows you to use JavaScript to draw on any flat surface with an [AxiD
 
 ![](images/drawing.gif)
 
+## Examples
+
+This repository includes some basic APIs and the following examples:
+
+* Map - choose a city and draw the streets
+* Terrain - pseudo 3D map for mountains and hills
+* Lorenz - the well known Lorenz attractor
+* JSConf - the logo of our favourite conference
+* Label Only - to draw it using a different color 
+* Bounds - the reference paper size
+* Adjust Pen - guide to calibrate the plotter
+
+## Sample Prints
+
+![](images/examples.jpg)
+
 ## Development
 
 Note: This project was build and tested on OSX. Use with care on other platforms.
@@ -67,6 +83,7 @@ plotter.print(); // start drawing
 If you like to have more control over the robot use the low level API from [/src/lib/axidraw.js]:
 
 ```js
+import createAxidraw from "./lib/axidraw";
 const axidraw = await createAxidraw();
 const coords = [...]; // a list of lines 
 
@@ -79,8 +96,7 @@ for (let i = 0; i < coords.length; i++) {
 _Note:_ You'll need to pass coords with `[x, y]` pairs that are in the range between `0` and `100`.
 
 
-### Images
+## Images from Setup
 
 ![](images/overview.jpg)
 ![](images/detail.jpg)
-![](images/examples.jpg)
