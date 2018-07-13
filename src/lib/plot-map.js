@@ -1,6 +1,6 @@
 import getProjection from './get-projection';
 import {optimizeOrder} from './optimize-lines';
-import loadLines from './load-lines';
+import loadLines from './load-lines-mapbox';
 import mergeLines from './merge-lines';
 import simplifyLines from './simplify-lines';
 import cropLines from './crop-lines-by-circle';
