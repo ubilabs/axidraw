@@ -1,14 +1,13 @@
 import flatten from 'geojson-flatten';
 import {tile} from 'd3-tile';
-import {VectorTile} from 'vector-tile';
+import {VectorTile} from '@mapbox/vector-tile';
 import getProjection from './get-projection';
 import Protobuf from 'pbf';
 
 const API_KEY = 'fApLQBTwQbaIclmV0CoOQA';
 const TILE_BASE_URL = 'https://tile.nextzen.org/tilezen/vector/v1/256/all/';
-const EXCLUDE_ROAD_TYPES = ['ferry', 'path', 'minor_road', 'rail'];
-
-const INCLUDED = ['road', 'water'];
+const INCLUDED_LAYERS = ['road', 'water'];
+const EXCLUDED_FEATURES = ['ferry', 'pedestrian'];
 
 /**
  * Loads vector tiles for a given viewport.
@@ -33,11 +32,22 @@ async function loadTiles(viewport) {
     const vectorLayers = new VectorTile(new Protobuf(buffer));
 
     for (const layer of Object.values(vectorLayers.layers)) {
-      if (!INCLUDED.includes(layer.name)) {continue;}
+      if (!INCLUDED_LAYERS.includes(layer.name)) {continue;}
 
       for (let i = 0; i < layer.length; i++) {
         const feature = layer.feature(i);
         const geojson = feature.toGeoJSON(visibleTile.x, visibleTile.y, visibleTile.z);
+
+        if (EXCLUDED_FEATURES.includes(geojson.properties.type)) {
+          continue;
+        }
+
+        // flatten multi polygon strings
+        if (geojson.geometry.type === 'MultiPolygon') {
+          geojson.geometry.coordinates = geojson.geometry.coordinates
+            .reduce((all, item) => all.concat(item), []);
+        }
+
         geojsons.push(geojson);
       }
     }
