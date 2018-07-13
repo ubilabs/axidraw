@@ -6,10 +6,9 @@ import simplifyLines from './simplify-lines';
 import cropLines from './crop-lines-by-circle';
 import getCircle from './get-circle';
 import {move, scale, scaleAndMove} from './scale-move';
-import {logoCoords} from '../assets/ubilabs-logo';
 import convertTextToCoords from './convert-text-to-coords';
 import Plotter from './plot-coords';
-import renderClaim from '../assets/logo-and-claim';
+import renderClaim from '../assets/logo-and-mapbox-claim';
 
 const PAPER_SIZE = {
   width: 496,
@@ -74,12 +73,7 @@ export default async function plotLines(options) {
 
   const centeredMap = move(simplifiedPaths, CIRCLE_OFFSET);
 
-  coords.push(
-    ...movedCircles,
-    ...textCoords,
-    ...centeredMap,
-    ...claim
-  );
+  coords.push(...movedCircles, ...textCoords, ...centeredMap, ...claim);
 
   const stats = [];
 
