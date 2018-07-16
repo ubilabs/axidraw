@@ -45,7 +45,8 @@ Download or clone the repository, then install all dependencies:
 npm install
 ```
 
-### Add API Tokens
+### Optional: Add API Tokens
+This is required, if you want to work with the map examples.
 Copy the `api-tokens.example.js` to `api-tokens.js` in the root directory and
 insert the necessary tokens for the API. Depending on whether you want to use
 the Tilezen API or Mapbox API, you need to provide the corresponding key.
