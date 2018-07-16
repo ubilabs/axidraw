@@ -14,7 +14,7 @@ async function update() {
 
   const textCoords = await convertTextToCoords(text, {
     x: PAPER_SIZE.width / 2,
-    y: 515,
+    y: 530,
     fontSize: 40,
     anchor: 'center middle'
   });
