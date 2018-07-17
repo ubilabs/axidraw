@@ -1,10 +1,12 @@
 import flatten from 'geojson-flatten';
 import {tile} from 'd3-tile';
 
+import {TILEZEN_TOKEN} from '../../api-tokens';
+
 import getProjection from './get-projection';
 
-const API_KEY = 'fApLQBTwQbaIclmV0CoOQA';
 const TILE_BASE_URL = 'https://tile.nextzen.org/tilezen/vector/v1/256/all/';
+
 const EXCLUDE_ROAD_TYPES = ['ferry', 'path', 'minor_road', 'rail'];
 
 /**
@@ -22,7 +24,9 @@ async function loadTiles(viewport) {
     .translate(projection([0, 0]))();
   const tileUrls = visibleTiles.map(
     tile =>
-      `${TILE_BASE_URL}${tile.z}/${tile.x}/${tile.y}.json?api_key=${API_KEY}`
+      `${TILE_BASE_URL}${tile.z}/${tile.x}/${tile.y}.json?api_key=${
+        TILEZEN_TOKEN
+      }`
   );
   const tilesJsons = await Promise.all(
     tileUrls.map(async tileUrl => {
@@ -67,8 +71,7 @@ export default async function(viewport) {
       ),
       ...tileData.water.features.filter(
         feature =>
-          feature.properties.boundary &&
-          feature.geometry.type != 'Point'
+          feature.properties.boundary && feature.geometry.type != 'Point'
       )
     );
   }
