@@ -165,6 +165,27 @@ const text = await convertTextToCoords(text, {
 
 ```
 
+#### `optimize-lines.js``
+
+If you have a lot of random lines it might take same time to draw them. Use this helper to sort the lines by picking the closest start point after finishing a line.
+
+```js
+import {optimizeOrder} from './optimize-lines';
+const randomLines = [...];
+const sortedLines = optimizeOrder(randomLines);
+```
+
+#### `merge-lines.js`
+
+A simple way to optimize the speed it to not move the pen up and down for lines that are close together. Note: This will best work with the `optimizeOrder` helper described above.
+
+```js
+import {optimizeOrder} from './optimize-lines';
+const random = [...];
+const sorted = optimizeOrder(randomLines);
+const mergded = mergeLines(sortedMapPaths);
+```
+
 ## Images from Setup
 
 ![](images/overview.jpg)
