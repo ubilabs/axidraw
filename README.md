@@ -15,10 +15,10 @@ This repository includes some basic APIs and the following examples:
 * Map - choose a city and draw the streets
 * Terrain - pseudo 3D map for mountains and hills
 * Lorenz - the well known Lorenz attractor
-* JSConf - the logo of our favourite conference
+* JSConf - the logo of our favorite conference
 * Label Only - to draw it using a different color 
 * Bounds - the reference paper size
-* Adjust Pen - guide to calibrate the plotter
+* Adjust Pen - a guide to calibrate the plotter
 
 ## Sample Prints
 
@@ -26,7 +26,7 @@ This repository includes some basic APIs and the following examples:
 
 ## Development
 
-Note: This project was build and tested on OSX. Use with care on other platforms.
+Note: This project was built and tested on OSX. Use with care on other platforms.
 
 ### Prerequisites
 
@@ -46,7 +46,7 @@ npm install
 ```
 
 ### Optional: Add API Tokens
-This is required, if you want to work with the map examples.
+This is required if you want to work with the map examples.
 Copy the `api-tokens.example.js` to `api-tokens.js` in the root directory and
 insert the necessary tokens for the API. Depending on whether you want to use
 the Tilezen API or Mapbox API, you need to provide the corresponding key.
@@ -55,7 +55,7 @@ the Tilezen API or Mapbox API, you need to provide the corresponding key.
 cp api-tokens.example.js api-tokens.js
 ```
 
-In the end it boils down to the decision, if you want to work with
+In the end, it boils down to the decision if you want to work with
 `src/lib/load-lines.js` or `src/lib/load-lines-mapbox.js`.
 We favor the latter at the moment and probably for the future.
 
@@ -83,9 +83,9 @@ If the AxiDraw is not connected, the server starts in simulator mode. To visit t
 
 #### `plot-coords.js`
 
-To create your own drawings you should start with the high level `Plotter` class from [src/lib/plot-coords.js](/src/lib/plot-coords.js). 
+To create your own drawings you should start with the high-level `Plotter` class from [src/lib/plot-coords.js](/src/lib/plot-coords.js). 
 
-See [src/draw-lorenz.js](/src/draw-lorenz.js) and [html/draw-lorenz.html](/html/draw-lorenz.html) for a basic example. _Note:_ This requires some bolierplate HTML tags (such as a `#preview` SVG) and styles. The final paper size is 496x700 pixel and equal to the DIN A6 paper format. 
+See [src/draw-lorenz.js](/src/draw-lorenz.js) and [html/draw-lorenz.html](/html/draw-lorenz.html) for a basic example. _Note:_ This requires some boilerplate HTML tags (such as a `#preview` SVG) and styles. The final paper size is 496x700 pixel and equal to the DIN A6 paper format. 
 
 Basic JavaScript outline:
 
@@ -163,6 +163,27 @@ const text = await convertTextToCoords(text, {
   anchor: 'center middle'
 });
 
+```
+
+#### `optimize-lines.js``
+
+If you have a lot of random lines it might take some time to draw them. Use this helper to sort the lines by picking the closest start point after finishing a line.
+
+```js
+import {optimizeOrder} from './optimize-lines';
+const randomLines = [...];
+const sortedLines = optimizeOrder(randomLines);
+```
+
+#### `merge-lines.js`
+
+A simple way to optimize the speed is to not move the pen up and down for lines that are close together. Note: This will best work with the `optimizeOrder` helper described above.
+
+```js
+import {optimizeOrder} from './optimize-lines';
+const random = [...];
+const sorted = optimizeOrder(randomLines);
+const mergded = mergeLines(sortedMapPaths);
 ```
 
 ## Images from Setup
