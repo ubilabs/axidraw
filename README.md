@@ -183,7 +183,7 @@ A simple way to optimize the speed is to not move the pen up and down for lines 
 import {optimizeOrder} from './optimize-lines';
 const random = [...];
 const sorted = optimizeOrder(randomLines);
-const mergded = mergeLines(sortedMapPaths);
+const merged = mergeLines(sortedMapPaths);
 ```
 
 ## Images from Setup
