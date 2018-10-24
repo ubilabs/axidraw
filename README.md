@@ -2,7 +2,7 @@
 
 ## Description
 
-AxiDrawJS allows you to use JavaScript to draw on any flat surface with an [AxiDraw](https://www.axidraw.com/).
+AxiDrawJS allows you to use JavaScript to draw on any flat surface with an [AxiDraw](https://www.axidraw.com/)<sup>[1](#acknowledgment)</sup>.
 
 > The AxiDraw V3 is a simple, modern, and precise pen plotter, capable of writing or drawing on almost any flat surface. It can write with fountain pens, permanent markers, and a variety of other writing implements to handle an endless number of applications.
 
@@ -202,3 +202,7 @@ In the end, we were quite overwhelmed by the positive feedback. The robot was dr
 ## Links
 
 Visit [ubilabs.net](https://ubilabs.net/) for more projects like this and follow [@ubilabs](https://twitter.com/ubilabs) on Twitter.
+
+## Acknowledgment
+
+1) [AxiDraw](https://axidraw.com/) is a trademark used with permission from [Evil Mad Science](https://www.evilmadscientist.com/) LLC.
