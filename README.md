@@ -10,15 +10,15 @@ AxiDrawJS allows you to use JavaScript to draw on any flat surface with an [AxiD
 
 ## Examples
 
-This repository includes some basic APIs and the following examples:
+This repository includes some basic APIs and the following designs and guides:
 
 * Map - choose a city and draw the streets
 * Terrain - pseudo 3D map for mountains and hills
-* Lorenz - the well known Lorenz attractor
+* Lorenz - the well-known Lorenz attractor
 * JSConf - the logo of our favorite conference
 * Label Only - to draw it using a different color 
 * Bounds - the reference paper size
-* Adjust Pen - a guide to calibrate the plotter
+* Adjust Pen - a guide to calibrating the plotter
 
 ## Sample Prints
 
@@ -57,7 +57,7 @@ cp api-tokens.example.js api-tokens.js
 
 In the end, it boils down to the decision if you want to work with
 `src/lib/load-lines.js` or `src/lib/load-lines-mapbox.js`.
-We favor the latter at the moment and probably for the future.
+We currently prefer the latter and will probably keep working with it in the future as well.
 
 ### Develop
 
@@ -83,9 +83,9 @@ If the AxiDraw is not connected, the server starts in simulator mode. To visit t
 
 #### `plot-coords.js`
 
-To create your own drawings you should start with the high-level `Plotter` class from [src/lib/plot-coords.js](/src/lib/plot-coords.js). 
+In order to create your own drawings you should start with the high-level `Plotter` class from [src/lib/plot-coords.js](/src/lib/plot-coords.js). 
 
-See [src/draw-lorenz.js](/src/draw-lorenz.js) and [html/draw-lorenz.html](/html/draw-lorenz.html) for a basic example. _Note:_ This requires some boilerplate HTML tags (such as a `#preview` SVG) and styles. The final paper size is 496x700 pixel and equal to the DIN A6 paper format. 
+See [src/draw-lorenz.js](/src/draw-lorenz.js) and [html/draw-lorenz.html](/html/draw-lorenz.html) for a basic example. _Note:_ This requires some boilerplate HTML tags (such as a `#preview` SVG) and styles. The final paper size is 496x700 pixels and equal to the DIN A6 paper format. 
 
 Basic JavaScript outline:
 
@@ -98,7 +98,7 @@ plotter.print(); // start drawing
 
 #### `axidraw.js`
 
-If you like to have more control over the robot use the low level API from [src/lib/axidraw.js](/src/lib/axidraw.js):
+If you’d like to have more control over the robot, use the low-level API from [src/lib/axidraw.js](/src/lib/axidraw.js):
 
 ```js
 import createAxidraw from "./lib/axidraw";
@@ -113,7 +113,7 @@ for (let i = 0; i < coords.length; i++) {
 
 #### `coords`
 
-You'll need to pass coords with `[x, y]` pairs that are in the range between `0` and `100`. 
+You'll need to pass coords with `[x, y]` pairs that are in the ranging from `0` to `100`. 
 
 Examples:
 
@@ -141,7 +141,7 @@ const coords = await load('/assets/my-logo.svg');
 #### `scale-move.js`
 
 
-To position and scale elements, use 
+In order to position and scale elements, use 
 
 ```js
 import {scaleAndMove} from '../lib/scale-move';
@@ -152,7 +152,7 @@ const positionedSquare = [
 
 #### `convert-text-to-coords.js`
 
-Here is an example how to draw dynamic text:
+Here is an example for drawing dynamic text:
 
 ```js
 import convertTextToCoords from './lib/convert-text-to-coords';
@@ -167,7 +167,7 @@ const text = await convertTextToCoords(text, {
 
 #### `optimize-lines.js``
 
-If you have a lot of random lines it might take some time to draw them. Use this helper to sort the lines by picking the closest start point after finishing a line.
+If you have a lot of random lines, it might take some time to draw them. Use this helper to sort the lines by picking the closest start point after finishing a line.
 
 ```js
 import {optimizeOrder} from './optimize-lines';
@@ -177,7 +177,7 @@ const sortedLines = optimizeOrder(randomLines);
 
 #### `merge-lines.js`
 
-A simple way to optimize the speed is to not move the pen up and down for lines that are close together. Note: This will best work with the `optimizeOrder` helper described above.
+A simple way to increase drawing speed is to reduce the number of times the pen has to be moved up and down during the drawing process. Note: This will best work with the `optimizeOrder` helper described above.
 
 ```js
 import {optimizeOrder} from './optimize-lines';
@@ -193,15 +193,15 @@ const merged = mergeLines(sortedMapPaths);
 
 ## Background
 
-This project started when we were preparing our sponsor booth at JSConf.eu. Instead of just spreading swag, we wanted something individual that people will love to bring home.  And because we are always surrounded by digital products, an analog print could make a difference. 
+This project started when we were preparing our sponsor booth at JSConf EU 2018. Instead of just spreading swag, we wanted something original and customizable that people would love to take home. And since we are surrounded by digital products all day, we thought that an analog print could definitely make a difference.
 
-At Ubilabs we work with all kind of mapping frameworks such as the Google Maps API or Mapbox.gl. It was an obvious next step that our little friendly robot should draw one of these maps for you.
+At Ubilabs, we work with all kinds of mapping frameworks such as the Google Maps API or Mapbox.gl. The obvious next step was that our little friendly robot would be drawing one of these maps for you.
 
-In the end, we were quite overwhelmed by the positive feedback. The robot was drawing non-stop and we produced more than 100 maps in two days. What we like most, was that it was a kind of ice-breaker when talking to strangers. We always asked them where they live to start the conversation. And while watching the robot drawing their personal map we learned from them and had the chance to explain what Ubilabs is doing.
+In the end, we were quite overwhelmed by the positive feedback. The robot was drawing non-stop during the conference and we produced more than 100 maps in two days. What we liked most was that it was a real ice-breaker when talking to strangers. We always asked them where they live to start the conversation. And while watching the robot draw their personal map, we got to know them and had the chance to tell them what we’re doing at Ubilabs.
 
 ## Links
 
-Visit [ubilabs.net](https://ubilabs.net/) for more projects like this and follow [@ubilabs](https://twitter.com/ubilabs) on Twitter.
+Follow [@ubilabs](https://twitter.com/ubilabs) on Twitter for more projects like this and visit [ubilabs.net](https://ubilabs.net/) to find out what kind of map projects we’re doing for our customers.
 
 ## Acknowledgment
 
