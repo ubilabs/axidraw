@@ -1,7 +1,8 @@
 import plotMap from './lib/plot-map';
 
-mapboxgl.accessToken =
-  'pk.eyJ1IjoidWJpbGFicyIsImEiOiJ4Tm02bDJrIn0.aA51umnsZbzugtBiFLZPoQ';
+import {MAPBOX_TOKEN} from '../api-tokens';
+
+mapboxgl.accessToken = MAPBOX_TOKEN;
 
 const map = new mapboxgl.Map({
   container: 'map',

@@ -1,11 +1,15 @@
-import perspectiveCamera from 'perspective-camera';
-import {renderSVGPaths} from './lib/svg-tools';
-import Plotter from './lib/plot-coords';
 import max from 'lodash.max';
 import min from 'lodash.min';
+import perspectiveCamera from 'perspective-camera';
+
+import renderClaim from './assets/logo-and-mapbox-claim';
+
+import Plotter from './lib/plot-coords';
+import {renderSVGPaths} from './lib/svg-tools';
 import {move, scaleAndMove} from './lib/scale-move';
 import convertTextToCoords from './lib/convert-text-to-coords';
-import renderClaim from './assets/logo-and-mapbox-claim';
+
+import {MAPBOX_TOKEN} from '../api-tokens';
 
 const TILE_SIZE = 400 * window.devicePixelRatio;
 const LINES = 80;
@@ -45,8 +49,8 @@ const coolPlaces = [
 ];
 renderCoolPlaces(coolPlaces);
 
-mapboxgl.accessToken =
-  'pk.eyJ1IjoidWJpbGFicyIsImEiOiJ4Tm02bDJrIn0.aA51umnsZbzugtBiFLZPoQ';
+mapboxgl.accessToken = MAPBOX_TOKEN;
+
 const map = new mapboxgl.Map(
   Object.assign(
     {
