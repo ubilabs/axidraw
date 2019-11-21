@@ -2,7 +2,7 @@ const SerialPort = require('serialport');
 
 const BOT_MANUFACTURER = 'SchmalzHaus';
 
-SerialPort.list((error, ports) => {
+SerialPort.list().then(ports => {
   const port = ports.find(port => port.manufacturer === BOT_MANUFACTURER);
 
   if (port) {
@@ -11,4 +11,6 @@ SerialPort.list((error, ports) => {
   }
 
   process.stdout.write('{auto}');
+}, error => {
+  throw new Error(error)
 });
