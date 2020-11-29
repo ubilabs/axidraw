@@ -3,9 +3,9 @@ import ProgressBar from './progress-bar';
 import {renderSVGPaths} from './svg-tools';
 
 const BOT_SCALE = {
-  ratio: 12000 / 8720,
-  factor: 14.2,
-  offset: 20
+  ratio: 1,
+  factor: 1,
+  offset: 0
 };
 
 export default class Plotter {
@@ -71,6 +71,8 @@ export default class Plotter {
         p[0] / BOT_SCALE.factor + BOT_SCALE.offset,
         p[1] / BOT_SCALE.factor * BOT_SCALE.ratio
       ]);
+
+      console.log(relativeLine)
 
       await this.axidraw.drawPath(relativeLine);
       path.removeAttribute('class');

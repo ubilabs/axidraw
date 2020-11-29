@@ -1,13 +1,16 @@
 const HtmlPlugin = require('html-webpack-plugin');
+const path = require('path')
 
 const entries = [
   'adjust-pen',
   'draw-bounds',
-  'draw-map',
-  'draw-terrain',
+  // 'draw-map',
+  // 'draw-terrain',
   'draw-lorenz',
-  'draw-jsconf-logo',
-  'draw-label-only'
+  // 'draw-jsconf-logo',
+  // 'draw-label-only',
+  'snowflakes',
+  'burnt-ogre'
 ];
 
 module.exports = {
@@ -28,6 +31,8 @@ module.exports = {
       })
   ),
   devServer: {
-    contentBase: './html'
+    contentBase: [
+      './html'
+    ]
   }
 };

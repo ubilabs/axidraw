@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "AxiDrawJS allows you to use JavaScript to draw on any flat surface.",
   "dependencies": {
+    "cncserver": "github:EdBoucher/cncserver",
     "express": "^4.17.1",
     "gl-matrix": "^3.3.0",
     "line2": "^0.2.1",
@@ -17,7 +18,6 @@
   },
   "devDependencies": {
     "@tweenjs/tween.js": "^18.5.0",
-    "cncserver": "github:pReya/cncserver#fix/serialport-update",
     "d3": "^5.4.0",
     "d3-geo": "^1.10.0",
     "d3-tile": "^1.0.0",
@@ -35,7 +35,7 @@
   "scripts": {
     "start": "npm-run-all -p webpack-server cncserver",
     "webpack-server": "webpack-dev-server --mode development",
-    "cncserver": "node ./node_modules/cncserver --botType=axidraw --serialPath=$(node get-port.js)",
+    "cncserver": "node ./node_modules/cncserver --botType=axidraw-a3 --serialPath=$(node get-port.js)",
     "postcncserver": "npm run clean-up",
     "clean-up": "rm /tmp/app.cncserver"
   },
