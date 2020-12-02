@@ -1,13 +1,14 @@
 import Plotter from './lib/plot-coords';
+import { AxiDrawA3Dimensions, A4Portrait } from './paper-sizes'
 
-const plotter  = new Plotter();
-const width = 100
-const height = 100
+const width = A4Portrait.width
+const height = A4Portrait.height
 
+const plotter  = new Plotter(AxiDrawA3Dimensions, A4Portrait);
 
-const corners = [[0, 0], [width, 0], [width, height], [0, height]].map(([x, y]) => {
-  return [[[x-2, y], [x+2, y]], [[x, y-2], [x, y + 2]]]
-})
+const corners = [[0, 0], [width, 0], [width, height], [0, height], [0, 0]]
+
+console.log(corners)
 
 let joinedCorners = [] 
 corners.forEach((list) => {
@@ -17,10 +18,10 @@ corners.forEach((list) => {
   })
 })
 
-console.log(joinedCorners)
+console.log(corners)
 
 
-plotter.coords = [joinedCorners];
+plotter.coords = [corners];
 
 document.querySelector('.print-button').onclick = function(){
   plotter.print();

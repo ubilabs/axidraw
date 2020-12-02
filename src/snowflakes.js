@@ -2,10 +2,11 @@ import Plotter from './lib/plot-coords';
 import { optimizeOrder } from './lib/optimize-lines'
 import { vec2 } from 'gl-matrix';
 import { MatrixStack } from './MatrixStack'
+import { AxiDrawA3Dimensions, A4Portrait } from './paper-sizes'
 
-const width = 496
-const height = 700
-const flakeRadius = width / 3;
+const width = A4Portrait.width
+const height = A4Portrait.height
+const flakeRadius = width * 0.15;
 
 const addXY = (x, y, ctx, path) => {
   let result = ctx.transform(vec2.fromValues(x, y))
@@ -40,11 +41,11 @@ class Branch {
 
       for (let i = 0; i < MAX_DEPTH; i++) {
         
-        const numSubBranches = Math.floor(Math.random() * 2) + 2
+        const numSubBranches = 2
 
         this.depthParams.push({
-          angle: Math.PI + plusMinusRand(Math.PI / 2),
-          length: (Math.random() / 2 + 0.5) * flakeRadius * 1 / (i + 1) + 20,
+          angle: Math.PI + plusMinusRand(Math.PI) * 2,
+          length: (Math.random() / 2 + 0.5) * flakeRadius * 1 / (i + 1),
           subBranches: []
         })
 
@@ -52,7 +53,7 @@ class Branch {
           
           this.depthParams[i].subBranches.push({
             position: (1 / numSubBranches) * (j + 1) * this.depthParams[i].length,
-            angle: Math.PI + plusMinusRand(Math.PI / 2),
+            angle: Math.PI + plusMinusRand(Math.PI / 3),
             length: 0.2 + Math.random() * this.depthParams[i].length
 
           })
@@ -70,6 +71,15 @@ class Branch {
       this.subBranchIndex = subBranchIndex
     }
     
+  }
+
+  addPolygon (length, ctx, path) {
+    let angle = Math.PI * 2 / 6
+    for (let i = 0; i < 7; i++) {
+      let x = Math.cos(angle * i + Math.PI / 6 + Math.PI) * 1
+      let y = Math.sin(angle * i + Math.PI / 6 + Math.PI) * 1 + length + 1
+      addVec(x, y, ctx, path)
+    }
   }
 
   createPoints (outputPaths) {
@@ -91,11 +101,7 @@ class Branch {
     outputPaths.push(this.path)
 
     if (this.depth === MAX_DEPTH - 1) {
-      addVec(0, length, ctx, this.path)
-      addVec(5, length + 5, ctx, this.path)
-      addVec(0, length + 10, ctx, this.path)
-      addVec(-5, length + 5, ctx, this.path)
-      addVec(0, length, ctx, this.path)
+      this.addPolygon(length, ctx, this.path)
       ctx.pop()
       return
     }
@@ -118,39 +124,44 @@ class Branch {
 
 }
 
-// 'createBranch' should be runnable without referring to outside variables
-
-
-
 async function init(){
   // const claim = await renderClaim();
-  const plotter = new Plotter();
+  const plotter = new Plotter(AxiDrawA3Dimensions, A4Portrait);
   const coords = []
+  let output = []
   
   const draw = () => {
-    let ctx = new MatrixStack()
-    ctx.disableLogging()
+    output = []
+    for (let k = 0; k < 9; k++) {
+      let ctx = new MatrixStack()
+      ctx.disableLogging()
 
-    let b = new Branch(ctx)
-    let lines = []
-    b.createPoints(lines)
+      let b = new Branch(ctx)
+      let lines = []
+      b.createPoints(lines)
+      ctx.reset()
 
-    let output = []
+      
+      let x = (Math.floor((k % 3) + 1)) * 0.33 * width - width * .15
+      let y = (Math.floor((k / 3 % 3) + 1)) * 0.33 * height - height * 0.15 
+      // console.log(x, y)
 
-    ctx.reset()
-    ctx.translate(width / 2, height / 2)
+      ctx.translate(x, y)
 
-    for (let i = 0; i < 6; i++) {
-      ctx.rotate(Math.PI * 2 / 6)
-      lines.forEach((line) => {
-        let rotated = []
-        line.forEach((p) => {
-          addXY(p[0], p[1], ctx, rotated)
+      for (let i = 0; i < 6; i++) {
+        ctx.rotate(Math.PI * 2 / 6)
+        lines.forEach((line) => {
+          let rotated = []
+          line.forEach((p) => {
+            addXY(p[0], p[1], ctx, rotated)
+          })
+          // addXY(p[0][0], p[0][1], ctx, rotated)
+          // addXY(p[1][0], p[1][1], ctx, rotated)
+          output.push(rotated)
         })
-        // addXY(p[0][0], p[0][1], ctx, rotated)
-        // addXY(p[1][0], p[1][1], ctx, rotated)
-        output.push(rotated)
-      })
+      }
+
+      ctx.pop()
     }
 
     plotter.coords = optimizeOrder(output);
