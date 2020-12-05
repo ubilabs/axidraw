@@ -1,0 +1,1 @@
+I'm using commercial, licenced fonts, which are in the 'fonts' directory, but since I can't distribute them they've been added to the .gitignore. 

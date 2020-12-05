@@ -3,3 +3,8 @@
 node_modules
 
 api-tokens.js
+
+*.OTF
+*.otf
+*.TTF
+*.ttf

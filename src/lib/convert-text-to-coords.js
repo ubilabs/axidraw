@@ -4,9 +4,9 @@ import TextToSVG from 'text-to-svg';
 const FONT_FILE = '/assets/MecSoft.ttf';
 
 // load font asynchrony
-async function loadFont() {
+async function loadFont(file = FONT_FILE) {
   return new Promise(resolve => {
-    TextToSVG.load(FONT_FILE, function (err, textToSVG) {
+    TextToSVG.load(file, function (err, textToSVG) {
       resolve(textToSVG);
     });
   });
@@ -19,8 +19,8 @@ async function loadFont() {
  * @param {Object} options Optional options for TextToSVG.
  *   Default {y: 10, fontSize: 10}
  */
-export default async function (text, options = {y: 50, fontSize: 50}) {
-  const textToSVG = await loadFont();
+export default async function (text, options = {y: 50, fontSize: 50, fontFile: undefined}) {
+  const textToSVG = await loadFont(options.fontFile);
   const path = textToSVG.getD(text, options);
 
   // remove closing line segment

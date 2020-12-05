@@ -6,7 +6,7 @@ import { AxiDrawA3Dimensions, A4Portrait } from './paper-sizes'
 
 const width = A4Portrait.width
 const height = A4Portrait.height
-const flakeRadius = width * 0.15;
+const flakeRadius = width / 8.5;
 
 const addXY = (x, y, ctx, path) => {
   let result = ctx.transform(vec2.fromValues(x, y))
@@ -41,11 +41,11 @@ class Branch {
 
       for (let i = 0; i < MAX_DEPTH; i++) {
         
-        const numSubBranches = 2
+        const numSubBranches = 3
 
         this.depthParams.push({
           angle: Math.PI + plusMinusRand(Math.PI) * 2,
-          length: (Math.random() / 2 + 0.5) * flakeRadius * 1 / (i + 1),
+          length: (Math.random() / 2 + 0.5) * flakeRadius * (1 / (i + 1)),
           subBranches: []
         })
 
@@ -95,13 +95,21 @@ class Branch {
 
 
     ctx.rotate(turnLeft ? angle : -angle)
-    addVec(0, 0, ctx, this.path)
-    addVec(0, length, ctx, this.path)
+    
+    if (depth !== 0) {
+      addVec(0, 0, ctx, this.path)
+      addVec(0, length * .8, ctx, this.path)
+    }
+    else {
+      addVec(0, length * .4, ctx, this.path)
+      addVec(0, length * 1, ctx, this.path) 
+    }
+    
 
     outputPaths.push(this.path)
 
     if (this.depth === MAX_DEPTH - 1) {
-      this.addPolygon(length, ctx, this.path)
+      //this.addPolygon(length, ctx, this.path)
       ctx.pop()
       return
     }
@@ -139,11 +147,31 @@ async function init(){
       let b = new Branch(ctx)
       let lines = []
       b.createPoints(lines)
+      // Rescale the result
+      let maxDistance = 0
+      lines.forEach((line) => {
+        if(!line) return
+        line.forEach((point) => {
+          if (vec2.length(point) > maxDistance) {
+            maxDistance = vec2.length(point)
+          }
+        })
+      })
+      lines = lines.map((line) => {
+        return line.map((point) => {
+          return [
+            point[0] * flakeRadius / maxDistance,
+            point[1] * flakeRadius / maxDistance 
+          ]
+        })
+      })
+
+      
       ctx.reset()
 
       
-      let x = (Math.floor((k % 3) + 1)) * 0.33 * width - width * .15
-      let y = (Math.floor((k / 3 % 3) + 1)) * 0.33 * height - height * 0.15 
+      let x = (Math.floor((k % 3) + 1)) * 0.33 * width - width * (.33 / 2)
+      let y = (Math.floor((k / 3 % 3) + 1)) * 0.33 * height - height * (.33 /2) 
       // console.log(x, y)
 
       ctx.translate(x, y)
@@ -155,14 +183,18 @@ async function init(){
           line.forEach((p) => {
             addXY(p[0], p[1], ctx, rotated)
           })
-          // addXY(p[0][0], p[0][1], ctx, rotated)
-          // addXY(p[1][0], p[1][1], ctx, rotated)
           output.push(rotated)
         })
       }
 
       ctx.pop()
     }
+
+    // Add some guide lines
+    output.push([[20, height * .33], [22, height * .33]])
+    output.push([[width - 22, height * .33], [width - 20, height * .33]])
+    output.push([[20, height * .66], [22, height * .66]])
+    output.push([[width - 22, height * .66], [width - 20, height * .66]])
 
     plotter.coords = optimizeOrder(output);
   }
