@@ -16,7 +16,7 @@
   "devDependencies": {
     "@tweenjs/tween.js": "^17.2.0",
     "cncserver": "^2.8.5",
-    "d3": "^5.4.0",
+    "d3": "^7.6.1",
     "d3-geo": "^1.10.0",
     "d3-tile": "0.0.4",
     "geojson-flatten": "^0.2.2",
